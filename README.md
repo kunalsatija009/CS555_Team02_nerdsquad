@@ -1,6 +1,7 @@
 # SSW555_Team02_nerdsquad
 SSW555-Agile project 
 This is the Github repository for SSW555_Team02_Nerdsquad
+\n
 Memebers:
 Aditya Badiger
 Aishwarya Bartakke
