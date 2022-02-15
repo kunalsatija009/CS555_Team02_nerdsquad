@@ -5,8 +5,7 @@
 ### Memebers:
 1. Aditya Badiger
 2. Aishwarya Bartakke
-3. Archa Patel
-4. Darshil Kathiriya
-5. Dixa Patel
-6. Malhar Paghdal
-7. Praveen Jakhar
+3. Darshil Kathiriya
+4. Dixa Patel
+5. Malhar Paghdal
+6. Praveen Jakhar
