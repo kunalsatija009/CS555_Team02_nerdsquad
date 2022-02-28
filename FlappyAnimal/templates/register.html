@@ -1,1 +1,29 @@
+{% extends 'base.html' %}
 
+{% block title %}
+Register
+{% endblock %}
+
+{% block content %}
+<nav class="navbarDark">
+    <p class="dlogin">REGISTER</p>
+  </nav>
+  <div>
+      <form class="login_Form" action="/register" method="POST">
+
+        <div>
+            <input class="email" type="text" placeholder=" Username" name="username" required>
+        </div>
+       
+          <div>
+              <input class="email" type="email" placeholder=" Email" name="email" required>
+          </div>
+          <div>
+              <input class= "password" type="password" placeholder=" Password" name="password" required>
+          </div>
+              <button class = "submitBtn" type="submit">Register</button>
+          </div>
+      </form>
+  </div>
+
+  {% endblock %}
