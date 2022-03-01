@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect,jsonify
 import pymongo as connection
-import bcrypt
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
-
+bcrypt = Bcrypt(app)
 # Connection to the mongoDB database
 db_name = "FlappyAnimal"
 dbConnection = connection.MongoClient( "mongodb://localhost:27017/")
@@ -49,10 +49,10 @@ def signUpPage():
 def loginPage():
     collection = database[collectionName]
     if request.method == 'POST':
-        userEmail = request.form['email']
+        email = request.form['email']
         userPassword = request.form['password'] 
         for value in collection.find():
-            if value['Email'] == userEmail and value['Password'] == bcrypt.hashpw(userPassword.encode('utf-8'), bcrypt.gensalt()):
+            if value['Email'] == email and  bcrypt.check_password_hash(value['Password'], userPassword):
                 return render_template('profile.html')
         return render_template('register.html')
        
@@ -66,11 +66,11 @@ def registerPage():
 
         userName = request.form['username']
         email = request.form['email']
-        hashPwd = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
+        password = request.form['password']
         record = {
            "Username":userName,
            "Email":email,
-           "Password":hashPwd
+           "Password":bcrypt.generate_password_hash(password)
         }
         userDetail = collection.insert_one(record)
         print("User registered successfully", userDetail)
