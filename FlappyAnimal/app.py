@@ -67,12 +67,12 @@ def registerPage():
         userName = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        record = {
+        user = {
            "Username":userName,
            "Email":email,
            "Password":bcrypt.generate_password_hash(password)
         }
-        userDetail = collection.insert_one(record)
+        userDetail = collection.insert_one(user)
         print("User registered successfully", userDetail)
         return render_template('success.html')
 
