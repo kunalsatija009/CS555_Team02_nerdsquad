@@ -17,6 +17,6 @@ This is the Github repository for CS555_Team02_Nerdsquad
 4. Installation of pymongo to communiate with MongoDB Community Server. -> python -m pip install pymongo
 5. Install bcrypt for encryption and decryption of password. -> python -m install flask-bcrypt
 6. Platfrom we used Visual studio code.
-7. To run project, select aap.py and click on run.
+7. To run project, select app.py and click on run.
 
 
