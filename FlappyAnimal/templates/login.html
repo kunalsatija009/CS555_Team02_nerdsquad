@@ -1,53 +1,27 @@
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Flappy Animal</title>
+{% block title %}
+Login
+{% endblock %}
 
-  <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
-  <link href="../static/signup.css" rel="stylesheet">
+{% block content %}
 
-</head>
-
-<body>
-
-<div class="container">
-  <div class="header">
-    <nav>
-      <ul class="nav nav-pills pull-right">
-        <li role="presentation" ><a href="base.html">Home</a></li>
-        <li role="presentation" class="active"><a href="login.html">Sign In</a></li>
-        <li role="presentation"><a href="register.html">Sign Up</a></li>
-      </ul>
-    </nav>
-    <h3 class="text-muted">Flappy Animal</h3>
+<nav class="navbarDark">
+    <p class="dlogin">LOGIN</p>
+  </nav>
+  <div>
+      <form class="login_Form" action="/login" method="POST">
+       
+          <div>
+              <input class="email" type="email" placeholder=" Email" name="email" required>
+          </div>
+          <div>
+              <input class= "password" type="password" placeholder=" Password" name="password" required>
+          </div>
+              <button class = "submitBtn" type="submit">{%block button%}Login{%endblock%}</button>
+              
+          </div>
+          
+      </form>
   </div>
-
-  <div class="jumbotron">
-    <h1>Login</h1>
-    <!-- {% with messages = get_flashed_messages() %} -->
-    <!-- {% if messages %} -->
-    <ul class=flashes>
-      <!-- {% for message in messages %} -->
-      <!-- <li>{{ message }}</li> -->
-      <!-- {% endfor %} -->
-    </ul>
-    <!-- {% endif %} -->
-    <!-- {% endwith %} -->
-    <form class="form-signin" action="/signin" method="post">
-      <label for="inputName" class="sr-only">Username</label>
-      <input type="name" name="username" id="inputName" class="form-control" placeholder="Username" required autofocus>
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-      <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" onclick = 'this.form.submit();' type="button">Login</button>
-    </form>
-  </div>
-
-  <footer class="footer">
-    <p>&copy; A game by Nerdsquad </p>
-  </footer>
-
-</div>
-</body>
-</html>
+{% endblock %}
