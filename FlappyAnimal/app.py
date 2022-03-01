@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect,jsonify
 import pymongo as connection
+import bcrypt
 
 app = Flask(__name__)
 
@@ -38,6 +39,10 @@ def check_collection(collectionName,database):
 def homePage():
     return render_template('login.html')
 
+# Routing the Register Page
+@app.route('/signUp',methods = ['GET','POST'])
+def signUpPage():
+    return render_template('register.html')
 
 # Check for Login credintial if not exist redirect to register page 
 @app.route('/login', methods = ['GET','POST'])
@@ -47,25 +52,25 @@ def loginPage():
         userEmail = request.form['email']
         userPassword = request.form['password'] 
         for value in collection.find():
-            if value['Email'] == userEmail and value['Password'] == userPassword:
+            if value['Email'] == userEmail and value['Password'] == bcrypt.hashpw(userPassword.encode('utf-8'), bcrypt.gensalt()):
                 return render_template('profile.html')
         return render_template('register.html')
        
 
 # Registration page
 @app.route('/register',methods = ['GET','POST'])
-def register():
+def registerPage():
     collection = database[collectionName]
 
     if request.method == "POST":
 
         userName = request.form['username']
         email = request.form['email']
-        password = request.form['password']
+        hashPwd = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
         record = {
            "Username":userName,
            "Email":email,
-           "Password":password
+           "Password":hashPwd
         }
         userDetail = collection.insert_one(record)
         print("User registered successfully", userDetail)
