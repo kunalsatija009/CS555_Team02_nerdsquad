@@ -5,6 +5,6 @@ class Testing(unittest.TestCase):
         self.assertNotEqual(app.loginPage, 0)
         
     def test2(self):
-        self.assertIsNone(app.registerPage, msg = None)
+        self.assertIsNone(app.registerPage, message = None)
         
 unittest.main()
