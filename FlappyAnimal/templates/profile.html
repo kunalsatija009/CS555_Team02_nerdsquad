@@ -4,10 +4,17 @@
 
 <nav class="navbarDark">
     <p class="dlogin">WELCOME TO FLAPPYANIMAL</p>
-  </nav>
-  <form action="/" class="login_Form" method="POST">
-      <button type="submit" class="btn-submit">Logout</button>
+    <br>
+    <h2">Your Info</h2>
+    <p>
+      <strong>ID:</strong> {{ session['_id'] }}<br>
+      <strong>Name:</strong> {{ session['Username'] }}<br>
+      <strong>Email:</strong> {{ session['Email'] }}
+    </p>
+ </nav>
+  <form class="login_Form" action="/profile" method="POST">
+    <button type="submit" class="btn-submit">Update</button>
+    <button type="submit" class="btn-submit">Logout</button>
   </form>
-
   
 {% endblock %}
