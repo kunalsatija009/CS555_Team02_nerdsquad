@@ -73,7 +73,7 @@ def registerPage():
            "Password":bcrypt.generate_password_hash(password)
         }
         userDetail = collection.insert_one(user)
-        print("User registered successfully", userDetail)
+        # print("User registered successfully", userDetail)
         return render_template('success.html')
 
 
