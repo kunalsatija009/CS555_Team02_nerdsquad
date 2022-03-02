@@ -1,53 +1,58 @@
 body{
-  margin: 0px;
-  background-color: rgba(192, 187, 187, 0.966);
-}
-.login_Form{
-  text-align: center;
-  margin-top: 5%;
-  margin-right: 15%;
-  margin-left: 15%;
-}
-.dlogin{
-  color: rgba(192, 187, 187, 0.966);
-  font-family: s'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-size: 25px;
-  text-align: center;
-}
-.navbarDark{
-  background-color: rgb(5, 27, 27);
-  padding: 15px;
-  margin-top: 5%;
-  margin-bottom: 0px;  
-  margin-left: 35%;
-  margin-right: 35%;  
-}
-.email{
-  margin: 15px;
-  width: 350px;
-  padding: 25px;
-  font-size: 15px;
-  border-style: solid;
-  border-radius: 15px;
-  border-width: 5px;
-}
-.password{
-  margin:15px;
-  width:350px;
-  padding: 25px;
-  font-size: 15px;
-  border-width: 5px;
-  border-style: solid;
-  border-radius: 15px;
-}
-.submitBtn{
-  font-size: 20px;
-  margin: 20px;
-  font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  text-align: center;
-  height: 50px;
-  width:250px;
-  border-radius: 20px;
-  color: rgb(181, 214, 243);
-  background-color: rgb(5, 27, 27);
-}
+    margin: 0px;
+    background-color: rgba(192, 187, 187, 0.966);
+  }
+  .login_Form{
+    text-align: center;
+    margin-top: 5%;
+    margin-right: 15%;
+    margin-left: 15%;
+  }
+  .dlogin{
+    color: rgba(192, 187, 187, 0.966);
+    font-family: s'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 25px;
+    text-align: center;
+  }
+  .navbarDark{
+    background-color: rgb(5, 27, 27);
+    padding: 15px;
+    margin-top: 5%;
+    margin-bottom: 0px;  
+    margin-left: 35%;
+    margin-right: 35%;  
+  }
+  .email{
+    margin: 15px;
+    width: 350px;
+    padding: 25px;
+    font-size: 15px;
+    border-style: solid;
+    border-radius: 15px;
+    border-width: 5px;
+  }
+  .password{
+    margin:15px;
+    width:350px;
+    padding: 25px;
+    font-size: 15px;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 15px;
+  }
+  .submitBtn{
+    font-size: 20px;
+    margin: 20px;
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+    height: 50px;
+    width:250px;
+    border-radius: 20px;
+    color: rgb(181, 214, 243);
+    background-color: rgb(5, 27, 27);
+  }
+  
+  .footer {
+    text-align: center;
+    color:rgb(14, 125, 223)
+  }
