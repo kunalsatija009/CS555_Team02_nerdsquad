@@ -19,11 +19,11 @@ BigFont = pygame.font.SysFont("dejavusans", 100)
 MedFont = pygame.font.SysFont("dejavusans", 50)
 SmallFont = pygame.font.SysFont("dejavusans", 25)
 
-# BackGround image   
+# BackGround images   
 BackGround = pygame.image.load("assets/sprites/BackGround.png")
 BackGround = pygame.transform.scale(BackGround, (SCREENWIDTH, SCREEN_HEIGHT))
 
-# Players image
+# Players images
 BIRDIMAGE = pygame.image.load('assets/sprites/Bird.png')
 PLANEIMAGE = pygame.image.load('assets/sprites/Plane01.png')
 FISHIMAGE = pygame.image.load('assets/sprites/Fish01.png')
