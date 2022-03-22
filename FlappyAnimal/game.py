@@ -175,7 +175,9 @@ def ScoreStar():
 # play function to play in background while game is ON - Praveen / Aishwariya
 def BackgroundMusic()
 
-
+# Return function to return to main page and place it at when game is over. - Aditya
+def ReturnToHome(): 
+	
 # Welcome page on the screen 
 def WelcomePage():
     TitleText = SmallFont.render("Flappy Animal", True, NAVYBLUE)
