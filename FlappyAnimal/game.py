@@ -66,6 +66,43 @@ WingSound = pygame.mixer.Sound('assets/audio/wing.wav')
 HitSound= pygame.mixer.Sound('assets/audio/hit.wav')
 PointSound = pygame.mixer.Sound('assets/audio/point.wav')
 
+# wait function 
+def KeyWait():
+    waiting = True
+    run = False
+    while  waiting:
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit(0)
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    USERNAME == "GuestUser"
+                    waiting = False
+                    run = True
+                    while run:
+                        MainGame()
+                elif event.key == pygame.K_RETURN:
+                    waiting = False
+                    GameMenu()
+            
+# Button Function - To creates Button
+def Button(x_pos, y_pos, width, height, color, hover):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed(3)
+        if x_pos + width > mouse[0] > x_pos and y_pos + height > mouse[1] > y_pos:
+            pygame.draw.rect(screen, hover, (x_pos, y_pos, width, height))
+            if click[0] == 1:
+                return True
+        else:
+             pygame.draw.rect(screen, color, (x_pos, y_pos, width, height))
+
+
+def BuildGround():
+	screen.blit(Ground,(GroundX_Pos,610))
+	screen.blit(Ground,(GroundX_Pos + SCREENWIDTH,610))
+
 # Welcome page on the screen 
 def WelcomePage():
     TitleText = SmallFont.render("Flappy Animal", True, NAVYBLUE)
