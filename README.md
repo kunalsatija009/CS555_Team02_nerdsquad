@@ -16,7 +16,8 @@ This is the Github repository for CS555_Team02_Nerdsquad
 3. Installation of flask - > Terminal command -> python -m pip install flask
 4. Installation of pymongo to communiate with MongoDB Community Server. -> python -m pip install pymongo
 5. Install bcrypt for encryption and decryption of password. -> python -m install flask-bcrypt
-6. Platfrom we used Visual studio code.
-7. To run project, select app.py and click on run.
+6. Install pygame : Use this Command ->  pip install pygame
+7. Platfrom we used Visual studio code.
+8. To run project, select game.py and click on run or (ctrl + F5)
 
 
