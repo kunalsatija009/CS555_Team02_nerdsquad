@@ -1,5 +1,7 @@
 import sys
 import pygame
+from pygame.locals import *
+import random
 from datetime import date
 from gameSettings import *
 import shelve # shelve is One of the standardLibrary to communicate with directory file.
