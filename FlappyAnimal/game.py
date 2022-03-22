@@ -232,3 +232,7 @@ def GameMenu():
         pygame.display.update()
         clock.tick(FPS / 4)
 
+       
+# This is loop for Main Game
+while True:
+    WelcomePage()
