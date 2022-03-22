@@ -146,6 +146,27 @@ def dCollision(pipes):
 
 	return True
 
+def PipeScore():
+    global SCORE, Is_Score
+    if GreenPipeList:
+        for p in GreenPipeList:
+            if p.centerx < 0:
+                Is_Score = True
+            elif 110 > p.centerx > 90 and Is_Score:
+                SCORE += 1
+                PointSound.play()
+                Is_Score = False
+
+def ScoreBoard(IsGame):
+	if IsGame == 'MainGame':
+		ScoreBlock = SmallFont.render(str(int(SCORE)),True, WHITE)
+		ScoreRect = ScoreBlock.get_rect(topleft = (20,20))
+		screen.blit(ScoreBlock,ScoreRect)
+	if IsGame == 'GameOver':
+		ScoreBlock = SmallFont.render(f'Score: {int(SCORE)}' ,True, WHITE)
+		ScoreRect = ScoreBlock.get_rect(center = (275,125))
+		screen.blit(ScoreBlock,ScoreRect)
+
 # Welcome page on the screen 
 def WelcomePage():
     TitleText = SmallFont.render("Flappy Animal", True, NAVYBLUE)
