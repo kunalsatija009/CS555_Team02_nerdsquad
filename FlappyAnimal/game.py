@@ -94,3 +94,141 @@ def WelcomePage():
 
         pygame.display.flip()
         KeyWait()
+def GameMenu():
+    TitleText = SmallFont.render("The Flappy Animal Game", True, MEDUIMBLUE)
+    
+    global NEWUSER
+
+    # Active - deactive upon selection
+    UNameActive = False
+    BirdActive = False
+    PlaneActive = False
+    FishActive = False
+    AstrntActive = False
+    
+  
+    UserChoicePrompt = SmallFont.render("Select your choices", True, MEDUIMBLUE)
+   
+    StartGame = SmallFont.render("Start Game", True, WHITE)
+
+    while True:
+        screen.fill((105,213,238))
+        screen.blit(TitleText, ((SCREENWIDTH - TitleText.get_width()) / 2, 0))
+
+        # UserName  TextBox
+        UserNameText = SmallFont.render(NEWUSER, True, WHITE)
+        UNTextBorder = pygame.Rect(((SCREENWIDTH - UserNameText.get_width()) / 2) - 10, SCREENHEIGHT * .20, UserNameText.get_width() + 10, 50)
+        screen.blit(UserNameText, ((SCREENWIDTH - UserNameText.get_width()) / 2, SCREENHEIGHT * .20))
+
+        # Border for User Iamges
+        BirdBorder = pygame.Rect((SCREENWIDTH * .250) - 4, (SCREENHEIGHT * .45) - 4, BIRDIMAGE.get_width() + 8, BIRDIMAGE.get_height() + 8)
+        PlaneBorder = pygame.Rect(((SCREENWIDTH - PLANEIMAGE.get_width()) * .462) - 4, (SCREENHEIGHT * .45) - 4, PLANEIMAGE.get_width() + 8, PLANEIMAGE.get_height() + 8)
+        FishBorder = pygame.Rect(((SCREENWIDTH - FISHIMAGE.get_width()) * .650) - 4, (SCREENHEIGHT * .45) - 4, FISHIMAGE.get_width() + 8, FISHIMAGE.get_height() + 8)
+        AstrntBorder = pygame.Rect(((SCREENWIDTH - ASTRNTIMAGE.get_width()) * .840) - 4, (SCREENHEIGHT * .45) - 4, ASTRNTIMAGE.get_width() + 8, ASTRNTIMAGE.get_height() + 8)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            # KeyBoard - Mouse Events
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if UNTextBorder.collidepoint(event.pos):
+                    UNameActive = True
+                elif BirdBorder.collidepoint(event.pos):
+                    BirdActive = True
+                elif PlaneBorder.collidepoint(event.pos):
+                    PlaneActive = True
+                elif FishBorder.collidepoint(event.pos):
+                    FishActive = True
+                elif AstrntBorder.collidepoint(event.pos):
+                    AstrntActive = True
+                else:
+                    UNameActive = False
+                    BirdActive = False
+                    PlaneActive = False
+                    FishActive = False
+                    AstrntActive = False
+
+            if event.type == pygame.KEYDOWN:
+                if UNameActive:
+                    if event.key == pygame.K_BACKSPACE:
+                        NEWUSER = NEWUSER[:-1]
+                    else:
+                        NEWUSER += event.unicode
+
+        # UserName TextBox Click Event
+        if UNameActive:
+            pygame.draw.rect(screen, WHITE, UNTextBorder, 2)
+            USERNAMEPrompt = SmallFont.render("Enter UserName here", True, WHITE)
+        else:
+            pygame.draw.rect(screen, MEDUIMBLUE, UNTextBorder, 2)
+            USERNAMEPrompt = SmallFont.render("Enter User-Name here", True, MEDUIMBLUE)
+
+        if BirdActive:
+            PlaneActive = False
+            FishActive = False
+            AstrntActive = False
+            pygame.draw.rect(screen, WHITE, BirdBorder, 2)
+            UserChoice = "Bird"
+        else:
+            pygame.draw.rect(screen, NAVYBLUE, BirdBorder, 2)
+
+        if PlaneActive:
+            BirdActive = False
+            FishActive = False
+            AstrntActive = False
+            pygame.draw.rect(screen, WHITE, PlaneBorder, 2)
+            UserChoice = "Plane"
+        else:
+            pygame.draw.rect(screen, NAVYBLUE, PlaneBorder, 2)
+
+        if FishActive:
+            BirdActive = False
+            PlaneActive = False
+            AstrntActive = False
+            pygame.draw.rect(screen, WHITE, FishBorder, 2)
+            UserChoice = "Fish"
+        else:
+            pygame.draw.rect(screen, NAVYBLUE, FishBorder, 2) 
+        
+        if AstrntActive:
+            BirdActive = False
+            PlaneActive = False
+            FishActive
+            pygame.draw.rect(screen, WHITE, AstrntBorder, 2)
+            UserChoice = "Astronaut"
+        else:
+            pygame.draw.rect(screen, NAVYBLUE, AstrntBorder, 2) 
+
+
+        screen.blit(USERNAMEPrompt, ((SCREENWIDTH - USERNAMEPrompt.get_width()) / 2, (SCREENHEIGHT * .05) + UserNameText.get_height()))
+        screen.blit(UserChoicePrompt, ((SCREENWIDTH - UserChoicePrompt.get_width()) / 2, SCREENHEIGHT * .35))
+
+        # User Selection
+        UserText = MedFont.render("Users:", True, WHITE)
+        screen.blit(UserText, (SCREENWIDTH * .075, SCREENHEIGHT * .45))
+        screen.blit(BIRDIMAGE, (SCREENWIDTH * .250, SCREENHEIGHT * .45))
+        screen.blit(PLANEIMAGE, (SCREENWIDTH * .425, SCREENHEIGHT * .45))
+        screen.blit(FISHIMAGE, (SCREENWIDTH * .600, SCREENHEIGHT * .45))
+        screen.blit(ASTRNTIMAGE, (SCREENWIDTH * .775, SCREENHEIGHT * .45))
+        submitButtton = Button((SCREENWIDTH / 2) - (StartGame.get_width() / 2) - 5, SCREENHEIGHT * .9,StartGame.get_width() + 10, StartGame.get_height(), MEDUIMBLUE, NAVYBLUE)
+
+        screen.blit(StartGame, ((SCREENWIDTH / 2) - (StartGame.get_width() / 2), int(SCREENHEIGHT * .9)))
+
+        global USERNAME
+        if submitButtton:
+            if NEWUSER != "":
+                USERNAME = NEWUSER
+                UserData['USERNAME'] = USERNAME
+            else:
+                USERNAME = 'GuestUser'
+                UserData['USERNAME'] = USERNAME
+
+            UserData['HIGH_SCORE'] = UserChoice
+            UserData.close()
+            SuccessScreen(USERNAME, UserChoice)
+
+        pygame.display.update()
+        clock.tick(FPS / 4)
+
