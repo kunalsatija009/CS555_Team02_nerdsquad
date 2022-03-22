@@ -168,15 +168,17 @@ def ScoreBoard(IsGame):
 		screen.blit(ScoreBlock,ScoreRect)
 		
 # Sprint 03 Work -Random generation of star in game for the points.- Malhar / Darshil		
-def star():
-def ScoreStar():
+#def star():
+#def ScoreStar():
 	
 # Sprint 03 Work - Creattion of four types different Background Music and 
 # play function to play in background while game is ON - Praveen / Aishwariya
-def BackgroundMusic()
+#def BackgroundMusic()
 
-# Return function to return to main page and place it at when game is over. - Aditya
-def ReturnToHome(): 
+# Sprint 03 Work -  Return function to return to main page and place it at when game is over. - Aditya
+#def ReturnToHome(): 
+
+# Sprint 03 Work  - Dixa will work on user menu selection and build game accordingly.
 	
 # Welcome page on the screen 
 def WelcomePage():
