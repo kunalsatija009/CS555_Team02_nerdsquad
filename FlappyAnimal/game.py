@@ -102,6 +102,49 @@ def Button(x_pos, y_pos, width, height, color, hover):
 def BuildGround():
 	screen.blit(Ground,(GroundX_Pos,610))
 	screen.blit(Ground,(GroundX_Pos + SCREENWIDTH,610))
+	
+
+def BuildPipe():
+	PipePosition = random.choice(PipeHeight)
+	TopPipe = GreenPipe.get_rect(midbottom = (SCREENWIDTH +200 ,PipePosition-350))
+	BottomPipe = GreenPipe.get_rect(midtop = (SCREENWIDTH +200 ,PipePosition))
+	return TopPipe,BottomPipe
+
+def PipeTransform(pipes):
+    for p in pipes:
+        if p.bottom < SCREENHEIGHT:
+            TossPipe = pygame.transform.flip(GreenPipe, False, True)
+            screen.blit(TossPipe, p)
+        else:
+            screen.blit(GreenPipe, p)
+
+def PipesMotion(pipes):
+	for p in pipes:
+		p.centerx -= 4
+	dPipesList = [p for p in pipes if p.right > -25 ]
+	return dPipesList
+
+def CreateBird():
+	dBird = BirdFrames[PLAYER_INDEX]
+	dBirdRect = dBird.get_rect(center = (100,BirdRect.centery))
+	return dBird,dBirdRect
+
+def BirdTransform(bird):
+	dBird = pygame.transform.rotozoom(bird, (PLAYER_MOVEMENT * -2) ,1)
+	return dBird
+
+def dCollision(pipes):
+	global Is_Score
+	for p in pipes:
+		if BirdRect.colliderect(p):
+			HitSound.play()
+			return False
+
+	if BirdRect.bottom >= 900 or BirdRect.top <= -100:
+		Is_Score = True
+		return False
+
+	return True
 
 # Welcome page on the screen 
 def WelcomePage():
