@@ -166,6 +166,15 @@ def ScoreBoard(IsGame):
 		ScoreBlock = SmallFont.render(f'Score: {int(SCORE)}' ,True, WHITE)
 		ScoreRect = ScoreBlock.get_rect(center = (275,125))
 		screen.blit(ScoreBlock,ScoreRect)
+		
+# Sprint 03 Work -Random generation of star in game for the points.- Malhar / Darshil		
+def star():
+def ScoreStar():
+	
+# Sprint 03 Work - Creattion of four types different Background Music and 
+# play function to play in background while game is ON - Praveen / Aishwariya
+def BackgroundMusic()
+
 
 # Welcome page on the screen 
 def WelcomePage():
