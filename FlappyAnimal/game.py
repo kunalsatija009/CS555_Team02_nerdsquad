@@ -13,7 +13,7 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Create the screen
-screen = pygame.display.set_mode((SCREENWIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT))
 pygame.display.set_caption(TITLE)
 
 # Intialize of Fonts variable
@@ -22,13 +22,14 @@ MedFont = pygame.font.SysFont("dejavusans", 50)
 SmallFont = pygame.font.SysFont("dejavusans", 25)
 
 # BackGround images   
-BackGround = pygame.image.load("assets/sprites/BackGround.png")
-BackGround = pygame.transform.scale(BackGround, (SCREENWIDTH, SCREEN_HEIGHT))
+BackGround = pygame.image.load("assets/sprites/BackGround.png").convert()
+BackGround = pygame.transform.scale(BackGround, (SCREENWIDTH, SCREENHEIGHT))
 
 # Players images
 BIRDIMAGE = pygame.image.load('assets/sprites/Bird.png')
 PLANEIMAGE = pygame.image.load('assets/sprites/Plane01.png')
 FISHIMAGE = pygame.image.load('assets/sprites/Fish01.png')
+ASTRNTIMAGE = pygame.image.load('assets/sprites/astronaut01.png') 
 
 # To save and load User data
 UserData = shelve.open("UserData")
@@ -166,7 +167,8 @@ def GameMenu():
         else:
             pygame.draw.rect(screen, MEDUIMBLUE, UNTextBorder, 2)
             USERNAMEPrompt = SmallFont.render("Enter User-Name here", True, MEDUIMBLUE)
-
+            
+        # User Selection Activity
         if BirdActive:
             PlaneActive = False
             FishActive = False
@@ -227,7 +229,7 @@ def GameMenu():
                 USERNAME = 'GuestUser'
                 UserData['USERNAME'] = USERNAME
 
-            UserData['HIGH_SCORE'] = UserChoice
+            UserData['UserChoice'] = UserChoice
             UserData.close()
             SuccessScreen(USERNAME, UserChoice)
 
