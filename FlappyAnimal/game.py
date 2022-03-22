@@ -97,6 +97,70 @@ def WelcomePage():
 
         pygame.display.flip()
         KeyWait()
+ def MainGame():
+    #TitleText = SmallFont.render(TITLE, True, MEDUIMBLUE)
+    global IS_ACTIVE, PLAYER_MOVEMENT, BirdSprites, BirdRect, GreenPipeList, GroundX_Pos, PLAYER_INDEX, SCORE, HIGH_SCORE
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE and IS_ACTIVE:
+                    PLAYER_MOVEMENT = 0
+                    PLAYER_MOVEMENT -= 12
+                    WingSound.play()
+                if event.key == pygame.K_SPACE and IS_ACTIVE == False:
+                    IS_ACTIVE = True
+                    GreenPipeList.clear()
+                    BirdRect.center = (100,325)
+                    PLAYER_MOVEMENT = 0
+                    SCORE = 0
+            
+            if event.type == PipeEvent:
+                GreenPipeList.extend(BuildPipe())
+
+            if event.type == BirdEvent:
+                if PLAYER_INDEX < 2:
+                    PLAYER_INDEX += 1
+                else:
+                    PLAYER_INDEX = 0
+                
+                BirdSprites,BirdRect = CreateBird()
+        screen.blit(BackGround,(0,0))
+        
+        if IS_ACTIVE:
+            # Player setting
+            PLAYER_MOVEMENT += GRAVITY
+            BirdFlip = BirdTransform(BirdSprites)
+            BirdRect.centery += PLAYER_MOVEMENT
+            screen.blit(BirdFlip,BirdRect)
+            IS_ACTIVE = dCollision(GreenPipeList)
+
+		    # Pipes settings
+            GreenPipeList = PipesMotion(GreenPipeList)
+            PipeTransform(GreenPipeList)
+
+		    # Score settings
+            PipeScore()
+            ScoreBoard('MainGame')
+
+        else:
+            screen.blit(BackGround, [0, 0])
+            TxtLine1 = SmallFont.render("Game Over", True, NAVYBLUE)
+            TxtLine2 = SmallFont.render("Use Space key to Restart", True, NAVYBLUE)
+            tl1_rct = TxtLine1.get_rect(midbottom = (SCREENWIDTH / 2, SCREENHEIGHT / 2))
+            tl2_rct = TxtLine2.get_rect(midbottom = (SCREENWIDTH / 2, SCREENHEIGHT * 2.5 / 4))
+            screen.blit(TxtLine1,  tl1_rct)
+            screen.blit(TxtLine2, tl2_rct)
+
+	    # Ground - Base Setting
+        GroundX_Pos -= 1
+        BuildGround()
+        if (SCREENWIDTH * -1) >= GroundX_Pos:
+            GroundX_Pos = 0
+        pygame.display.update()
+        clock.tick(FPS)
 def GameMenu():
     TitleText = SmallFont.render("The Flappy Animal Game", True, MEDUIMBLUE)
     
