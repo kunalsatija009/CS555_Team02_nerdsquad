@@ -236,6 +236,28 @@ def GameMenu():
         pygame.display.update()
         clock.tick(FPS / 4)
 
+def SuccessScreen(USERNAME, UserChoice):
+    TitleText = SmallFont.render(TITLE, True, MEDUIMBLUE)
+
+    # Declare Variables
+    welcomeName = SmallFont.render("Hello, " + USERNAME + ".", True, MEDUIMBLUE)
+    welcomeCareer = SmallFont.render("YourChoices " + UserChoice + ".", True, MEDUIMBLUE)
+
+    while True:
+        screen.fill((105,213,238))
+        screen.blit(TitleText, ((SCREENWIDTH - TitleText.get_width()) / 2, 0))
+
+        screen.blit(welcomeName, (20, 40))
+        screen.blit(welcomeCareer, (20, welcomeName.get_height() + 40))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        pygame.display.update()
+        clock.tick(FPS / 4)
+
        
 # This is loop for Main Game
 while True:
