@@ -74,6 +74,7 @@ def KeyWait():
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+		UserData.close()
                 pygame.quit()
                 sys.exit(0)
             elif event.type == pygame.KEYUP:
@@ -98,6 +99,11 @@ def Button(x_pos, y_pos, width, height, color, hover):
         else:
              pygame.draw.rect(screen, color, (x_pos, y_pos, width, height))
 
+# Text Function - Refactoring 
+def DText(txt, x, y):
+    dTxt = SmallFont.render(str(txt), True, NAVYBLUE)
+    TxtRct = dTxt.get_rect(midtop = (x , y))
+    screen.blit(dTxt, TxtRct)
 
 def BuildGround():
 	screen.blit(Ground,(GroundX_Pos,610))
@@ -198,25 +204,22 @@ def WelcomePage():
 
         BackGround_rect = BackGround.get_rect()
         screen.blit(BackGround, (BackGround_rect.width, 0))
-
-        TxtLine1 = SmallFont.render("Space key to start as Guest User", True, NAVYBLUE)
-        TxtLine2 = SmallFont.render("Enter or Return key to choose settings ", True, NAVYBLUE)
-        TxtLine3 = SmallFont.render("Use Space key to move", True, NAVYBLUE)
-        tl1_rct = TxtLine1.get_rect(midbottom = (SCREENWIDTH / 2, SCREENHEIGHT / 2))
-        tl2_rct = TxtLine2.get_rect(midbottom = (SCREENWIDTH / 2, SCREENHEIGHT * 2.5 / 4))
-        tl3_rct = TxtLine3.get_rect(midbottom = (SCREENWIDTH / 2, SCREENHEIGHT * 3 / 4))
-        screen.blit(TxtLine1,  tl1_rct)
-        screen.blit(TxtLine2, tl2_rct)
-        screen.blit(TxtLine3,  tl3_rct)
+	
+	# Refactroing 
+        DText('Space key to start as Guest User', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.25)
+        DText('Enter or Return key to choose settings', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.375)
+        DText('Use Space key to move', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.5)
 
         pygame.display.flip()
         KeyWait()
+	
  def MainGame():
     #TitleText = SmallFont.render(TITLE, True, MEDUIMBLUE)
     global IS_ACTIVE, PLAYER_MOVEMENT, BirdSprites, BirdRect, GreenPipeList, GroundX_Pos, PLAYER_INDEX, SCORE, HIGH_SCORE
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+		UserData.close()
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
@@ -261,14 +264,10 @@ def WelcomePage():
 
         else:
             screen.blit(BackGround, [0, 0])
-            TxtLine1 = SmallFont.render("Game Over", True, NAVYBLUE)
-            TxtLine2 = SmallFont.render("Use Space key to Restart", True, NAVYBLUE)
-            tl1_rct = TxtLine1.get_rect(midbottom = (SCREENWIDTH / 2, SCREENHEIGHT / 2))
-            tl2_rct = TxtLine2.get_rect(midbottom = (SCREENWIDTH / 2, SCREENHEIGHT * 2.5 / 4))
-            screen.blit(TxtLine1,  tl1_rct)
-            screen.blit(TxtLine2, tl2_rct)
+            DText('Game Over', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.25)
+            DText('Use "space" key to Replay or "esc" key to return Home', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.375)
 
-	    # Ground - Base Setting
+	# Ground - Base Setting
         GroundX_Pos -= 1
         BuildGround()
         if (SCREENWIDTH * -1) >= GroundX_Pos:
@@ -309,6 +308,7 @@ def GameMenu():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+		UserData.close()
                 pygame.quit()
                 sys.exit()
 
@@ -406,9 +406,17 @@ def GameMenu():
             else:
                 USERNAME = 'GuestUser'
                 UserData['USERNAME'] = USERNAME
-
-            UserData['UserChoice'] = UserChoice
-            UserData.close()
+	    if USERCHOICE != "":
+                UserData['USERCHOICE'] = USERCHOICE
+            else:
+                USERCHOICE = 'Bird'
+                UserData['USERCHOICE'] = USERCHOICE
+            if THEMECHOICE != "":
+                UserData['THEMECHOICE'] = THEMECHOICE
+            else:
+                THEMECHOICE = 'DayBg'
+                UserData['THEMECHOICE'] = THEMECHOICE
+		
             SuccessScreen(USERNAME, UserChoice)
 
         pygame.display.update()
@@ -417,21 +425,27 @@ def GameMenu():
 def SuccessScreen(USERNAME, UserChoice):
     TitleText = SmallFont.render(TITLE, True, MEDUIMBLUE)
 
-    # Declare Variables
-    welcomeName = SmallFont.render("Hello, " + USERNAME + ".", True, MEDUIMBLUE)
-    welcomeChoices  = SmallFont.render("YourChoices " + UserChoice + ".", True, MEDUIMBLUE)
-
     while True:
         screen.fill((105,213,238))
         screen.blit(TitleText, ((SCREENWIDTH - TitleText.get_width()) / 2, 0))
-
-        screen.blit(welcomeName, (20, 40))
-        screen.blit(welcomeChoices , (20, welcomeName.get_height() + 40))
+	
+	# Refactoring ....
+        DText("Hello, " + USERNAME + ".", SCREENWIDTH * 0.5, SCREENHEIGHT * 0.25)
+        DText("Your User Choice is: " + USERCHOICE + ".", SCREENWIDTH * 0.5, SCREENHEIGHT * 0.375)
+        DText("Your Theme Choice is: " + THEMECHOICE + ".", SCREENWIDTH * 0.5, SCREENHEIGHT * 0.5)
+        DText("Press 'space' key to play game or 'esc' key to return Home.", SCREENWIDTH * 0.5, SCREENHEIGHT * 0.625)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                UserData.close()
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    MainGame(USERNAME, USERCHOICE, THEMECHOICE)
+                elif event.key == pygame.K_ESCAPE:
+                    UserData.clear()
+                    WelcomePage()
 
         pygame.display.update()
         clock.tick(FPS / 4)
