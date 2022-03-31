@@ -19,6 +19,8 @@ SMALLFONT = ("dejavusans", 25)
 USERNAME = ""
 SCORE = ""
 NEWUSER = ""
+USERCHOICE = ""
+THEMECHOICE = ""
 
 # Other Game Variables
 GRAVITY = 0.25
