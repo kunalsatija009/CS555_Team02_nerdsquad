@@ -40,12 +40,6 @@ Ground = pygame.image.load('assets/sprites/base.png').convert_alpha()
 Ground = pygame.transform.scale(Ground, (int(SCREENWIDTH), int(168)))
 GroundX_Pos = 0
 
-# Player Variables and settings
-UserBird = pygame.transform.scale2x(pygame.image.load('assets/sprites/Bird1.png').convert_alpha())
-BirdFrames = [UserBird, UserBird, UserBird]
-BirdSprites = BirdFrames[PLAYER_INDEX]
-BirdRect = BirdSprites.get_rect(center = (100,325))
-
 # Obstecle VAriables and settings
 GreenPipe = pygame.image.load('assets/sprites/GreenPipe.png')
 GreenPipe = pygame.transform.scale2x(GreenPipe)
@@ -54,8 +48,8 @@ GreenPipeList = []
 PipeHeight = [400,450,500]
 
 # Events
-BirdEvent = pygame.USEREVENT + 1
-pygame.time.set_timer(BirdEvent,225)
+XUserEvent = pygame.USEREVENT + 1
+pygame.time.set_timer(XUserEvent,225)
 PipeEvent = pygame.USEREVENT
 pygame.time.set_timer(PipeEvent,2500)
 SCOREEVENT = pygame.USEREVENT + 2
@@ -65,6 +59,20 @@ pygame.time.set_timer(SCOREEVENT,100)
 WingSound = pygame.mixer.Sound('assets/audio/wing.wav')
 HitSound= pygame.mixer.Sound('assets/audio/hit.wav')
 PointSound = pygame.mixer.Sound('assets/audio/point.wav')
+
+# Player Variables and settings
+class XUser:
+    def __init__(self, img):
+        self.UserX = pygame.transform.scale2x(pygame.image.load(img).convert_alpha())
+        self.XFrames = [self.UserX, self.UserX, self.UserX]
+        self.XSprites =  self.XFrames[PLAYER_INDEX]
+        self.XRect = self.XSprites.get_rect(center = (100,325))
+        self.dXUser = self.XFrames[PLAYER_INDEX]
+        self.dXUserRect = self.dXUser.get_rect(center = (100,self.XRect.centery))
+
+    def UserTransform(self, XSprites):
+        XUserSprites = pygame.transform.rotozoom(XSprites, (PLAYER_MOVEMENT * -2) ,1)
+        return XUserSprites
 
 # wait function 
 def KeyWait():
@@ -83,7 +91,7 @@ def KeyWait():
                     waiting = False
                     run = True
                     while run:
-                        MainGame()
+                        MainGame(USERNAME, USERCHOICE, THEMECHOICE)
                 elif event.key == pygame.K_RETURN:
                     waiting = False
                     GameMenu()
@@ -130,23 +138,14 @@ def PipesMotion(pipes):
 	dPipesList = [p for p in pipes if p.right > -25 ]
 	return dPipesList
 
-def CreateBird():
-	dBird = BirdFrames[PLAYER_INDEX]
-	dBirdRect = dBird.get_rect(center = (100,BirdRect.centery))
-	return dBird,dBirdRect
-
-def BirdTransform(bird):
-	dBird = pygame.transform.rotozoom(bird, (PLAYER_MOVEMENT * -2) ,1)
-	return dBird
-
 def dCollision(pipes):
 	global Is_Score
 	for p in pipes:
-		if BirdRect.colliderect(p):
+		if UserRect.colliderect(p):
 			HitSound.play()
 			return False
 
-	if BirdRect.bottom >= 900 or BirdRect.top <= -100:
+	if UserRect.bottom >= 900 or UserRect.top <= -100:
 		Is_Score = True
 		return False
 
@@ -215,7 +214,17 @@ def WelcomePage():
 	
  def MainGame():
     #TitleText = SmallFont.render(TITLE, True, MEDUIMBLUE)
-    global IS_ACTIVE, PLAYER_MOVEMENT, BirdSprites, BirdRect, GreenPipeList, GroundX_Pos, PLAYER_INDEX, SCORE, HIGH_SCORE
+    global IS_ACTIVE, PLAYER_MOVEMENT,  UserSprites, UserRect, GreenPipeList, GroundX_Pos, PLAYER_INDEX, SCORE, HIGH_SCORE
+
+    if USERCHOICE == 'Plane':
+        dUser = XUser('assets/sprites/Plane.png')
+    elif USERCHOICE == 'Fish':
+        dUser = XUser('assets/sprites/Fish.png')
+    elif USERCHOICE == 'Astronaut':
+        dUser = XUser('assets/sprites/astronaut.png')
+    else:
+        dUser = XUser('assets/sprites/Bird1.png')
+	
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -233,11 +242,18 @@ def WelcomePage():
                     BirdRect.center = (100,325)
                     PLAYER_MOVEMENT = 0
                     SCORE = 0
+		if event.key == pygame.K_ESCAPE:
+		    IS_ACTIVE = True
+                    GreenPipeList.clear()
+                    UserRect.center = (100,325)
+                    PLAYER_MOVEMENT = 0
+                    SCORE = 0 
+                    WelcomePage()
             
             if event.type == PipeEvent:
                 GreenPipeList.extend(BuildPipe())
 
-            if event.type == BirdEvent:
+            if event.type == XUserEvent:
                 if PLAYER_INDEX < 2:
                     PLAYER_INDEX += 1
                 else:
@@ -249,9 +265,11 @@ def WelcomePage():
         if IS_ACTIVE:
             # Player setting
             PLAYER_MOVEMENT += GRAVITY
-            BirdFlip = BirdTransform(BirdSprites)
-            BirdRect.centery += PLAYER_MOVEMENT
-            screen.blit(BirdFlip,BirdRect)
+            UserSprites = dUser.dXUser
+            UserFlip = dUser.UserTransform(UserSprites)
+            UserRect = dUser.dXUserRect
+            UserRect.centery += PLAYER_MOVEMENT
+            screen.blit(UserFlip,UserRect)
             IS_ACTIVE = dCollision(GreenPipeList)
 
 		    # Pipes settings
@@ -274,6 +292,7 @@ def WelcomePage():
             GroundX_Pos = 0
         pygame.display.update()
         clock.tick(FPS)
+	
 def GameMenu():
     TitleText = SmallFont.render("The Flappy Animal Game", True, MEDUIMBLUE)
     
