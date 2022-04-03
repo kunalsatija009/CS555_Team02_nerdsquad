@@ -1,6 +1,7 @@
 import sys
 import pygame
 from pygame.locals import *
+from pygame import mixer
 import random
 from datetime import date
 from gameSettings import *
@@ -11,6 +12,10 @@ pygame.init()
 
 # Setting of clock for game
 clock = pygame.time.Clock()
+
+# Background Music
+mixer.music.load('assets/audio/bgmusic.mp3')
+mixer.music.play(-1)
 
 # Create the screen
 screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT))
