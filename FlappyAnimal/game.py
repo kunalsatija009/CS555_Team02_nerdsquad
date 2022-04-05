@@ -176,7 +176,7 @@ def ScoreBoard(IsGame):
 	if IsGame == 'GameOver':
 		ScoreBlock = SmallFont.render(f'Score: {int(SCORE)}' ,True, WHITE)
 		ScoreRect = ScoreBlock.get_rect(center = (275,125))
-		GameoverSound.play()
+		
 		screen.blit(ScoreBlock,ScoreRect)
 		
 # Sprint 03 Work -Random generation of star in game for the points.- Malhar / Darshil		
