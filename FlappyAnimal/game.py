@@ -221,10 +221,9 @@ def WelcomePage():
         pygame.display.flip()
         KeyWait()
 	
- def MainGame():
+ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
     #TitleText = SmallFont.render(TITLE, True, MEDUIMBLUE)
-    global IS_ACTIVE, PLAYER_MOVEMENT,  UserSprites, UserRect, GreenPipeList, GroundX_Pos, PLAYER_INDEX, SCORE, HIGH_SCORE
-
+    global IS_ACTIVE, PLAYER_MOVEMENT, UserSprites, UserRect, GreenPipeList, GroundX_Pos, PLAYER_INDEX, SCORE, HIGH_SCORE
     if USERCHOICE == 'Plane':
         dUser = XUser('assets/sprites/Plane.png')
     elif USERCHOICE == 'Fish':
@@ -233,11 +232,11 @@ def WelcomePage():
         dUser = XUser('assets/sprites/astronaut.png')
     else:
         dUser = XUser('assets/sprites/Bird1.png')
-	
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-		UserData.close()
+                UserData.close()
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
@@ -248,17 +247,19 @@ def WelcomePage():
                 if event.key == pygame.K_SPACE and IS_ACTIVE == False:
                     IS_ACTIVE = True
                     GreenPipeList.clear()
-                    BirdRect.center = (100,325)
+                    UserRect.center = (100,325)
                     PLAYER_MOVEMENT = 0
                     SCORE = 0
-		if event.key == pygame.K_ESCAPE:
-		    IS_ACTIVE = True
+                if event.key == pygame.K_ESCAPE:
+                    USERCHOICE = 'Bird'
+                    dUser = XUser('assets/sprites/Bird1.png')
+                    IS_ACTIVE = True
                     GreenPipeList.clear()
                     UserRect.center = (100,325)
                     PLAYER_MOVEMENT = 0
                     SCORE = 0 
                     WelcomePage()
-            
+                    
             if event.type == PipeEvent:
                 GreenPipeList.extend(BuildPipe())
 
@@ -268,9 +269,7 @@ def WelcomePage():
                 else:
                     PLAYER_INDEX = 0
                 
-                BirdSprites,BirdRect = CreateBird()
         screen.blit(BackGround,(0,0))
-        
         if IS_ACTIVE:
             # Player setting
             PLAYER_MOVEMENT += GRAVITY
@@ -280,35 +279,34 @@ def WelcomePage():
             UserRect.centery += PLAYER_MOVEMENT
             screen.blit(UserFlip,UserRect)
             IS_ACTIVE = dCollision(GreenPipeList)
-
 		    # Pipes settings
             GreenPipeList = PipesMotion(GreenPipeList)
             PipeTransform(GreenPipeList)
-
 		    # Score settings
             PipeScore()
             ScoreBoard('MainGame', 0)
 
         else:
             screen.blit(BackGround, [0, 0])
-		GameoverSound.play()
+            GameoverSound.play()
             import time
             time.sleep(2) # wait and let the sound play for 2 second
             GameoverSound.stop()
-	    UserData['SCORE'] = SCORE
+            UserData['SCORE'] = SCORE
             DText('Game Over', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.25)
-	    DText('Your Score: ' + str(SCORE), SCREENWIDTH * 0.5, SCREENHEIGHT * 0.375)
+            DText('Your Score: ' + str(SCORE), SCREENWIDTH * 0.5, SCREENHEIGHT * 0.375)
             DText('Use "space" key to Replay or "esc" key to return Home', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.5)
-	    ScoreBoard('GameOver', SCORE)
-
-	# Ground - Base Setting
+            ScoreBoard('GameOver', SCORE)
+            
+	    # Ground - Base Setting
         GroundX_Pos -= 1
         BuildGround()
         if (SCREENWIDTH * -1) >= GroundX_Pos:
             GroundX_Pos = 0
         pygame.display.update()
         clock.tick(FPS)
-	
+
+
 def GameMenu():
     TitleText = SmallFont.render("The Flappy Animal Game", True, MEDUIMBLUE)
     
@@ -321,9 +319,7 @@ def GameMenu():
     FishActive = False
     AstrntActive = False
     
-  
     UserChoicePrompt = SmallFont.render("Select your choices", True, MEDUIMBLUE)
-   
     StartGame = SmallFont.render("Start Game", True, WHITE)
 
     while True:
@@ -335,7 +331,7 @@ def GameMenu():
         UNTextBorder = pygame.Rect(((SCREENWIDTH - UserNameText.get_width()) / 2) - 10, SCREENHEIGHT * .20, UserNameText.get_width() + 10, 50)
         screen.blit(UserNameText, ((SCREENWIDTH - UserNameText.get_width()) / 2, SCREENHEIGHT * .20))
 
-        # Border for User Iamges
+        # Border for User Images
         BirdBorder = pygame.Rect((SCREENWIDTH * .250) - 4, (SCREENHEIGHT * .45) - 4, BIRDIMAGE.get_width() + 8, BIRDIMAGE.get_height() + 8)
         PlaneBorder = pygame.Rect(((SCREENWIDTH - PLANEIMAGE.get_width()) * .462) - 4, (SCREENHEIGHT * .45) - 4, PLANEIMAGE.get_width() + 8, PLANEIMAGE.get_height() + 8)
         FishBorder = pygame.Rect(((SCREENWIDTH - FISHIMAGE.get_width()) * .650) - 4, (SCREENHEIGHT * .45) - 4, FISHIMAGE.get_width() + 8, FISHIMAGE.get_height() + 8)
@@ -343,7 +339,7 @@ def GameMenu():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-		UserData.close()
+                UserData.close()
                 pygame.quit()
                 sys.exit()
 
@@ -358,12 +354,12 @@ def GameMenu():
                     AstrntActive = False
                 elif PlaneBorder.collidepoint(event.pos):
                     PlaneActive = True
-		    FishActive = False
+                    FishActive = False
                     BirdActive = False
                     AstrntActive = False
                 elif FishBorder.collidepoint(event.pos):
                     FishActive = True
-		    BirdActive = False
+                    BirdActive = False
                     PlaneActive = False
                     AstrntActive = False
                 elif AstrntBorder.collidepoint(event.pos):
@@ -392,44 +388,30 @@ def GameMenu():
         else:
             pygame.draw.rect(screen, MEDUIMBLUE, UNTextBorder, 2)
             USERNAMEPrompt = SmallFont.render("Enter User-Name here", True, MEDUIMBLUE)
-            
-        # User Selection Activity
+
         if BirdActive:
-            PlaneActive = False
-            FishActive = False
-            AstrntActive = False
             pygame.draw.rect(screen, WHITE, BirdBorder, 2)
-            UserChoice = "Bird"
+            USERCHOICE = "Bird"
         else:
             pygame.draw.rect(screen, NAVYBLUE, BirdBorder, 2)
-
+        
         if PlaneActive:
-            BirdActive = False
-            FishActive = False
-            AstrntActive = False
             pygame.draw.rect(screen, WHITE, PlaneBorder, 2)
-            UserChoice = "Plane"
+            USERCHOICE = "Plane"
         else:
             pygame.draw.rect(screen, NAVYBLUE, PlaneBorder, 2)
 
         if FishActive:
-            BirdActive = False
-            PlaneActive = False
-            AstrntActive = False
             pygame.draw.rect(screen, WHITE, FishBorder, 2)
-            UserChoice = "Fish"
+            USERCHOICE = "Fish"
         else:
             pygame.draw.rect(screen, NAVYBLUE, FishBorder, 2) 
         
         if AstrntActive:
-            BirdActive = False
-            PlaneActive = False
-            FishActive
             pygame.draw.rect(screen, WHITE, AstrntBorder, 2)
-            UserChoice = "Astronaut"
+            USERCHOICE = "Astronaut"
         else:
             pygame.draw.rect(screen, NAVYBLUE, AstrntBorder, 2) 
-
 
         screen.blit(USERNAMEPrompt, ((SCREENWIDTH - USERNAMEPrompt.get_width()) / 2, (SCREENHEIGHT * .05) + UserNameText.get_height()))
         screen.blit(UserChoicePrompt, ((SCREENWIDTH - UserChoicePrompt.get_width()) / 2, SCREENHEIGHT * .35))
@@ -441,11 +423,15 @@ def GameMenu():
         screen.blit(PLANEIMAGE, (SCREENWIDTH * .425, SCREENHEIGHT * .45))
         screen.blit(FISHIMAGE, (SCREENWIDTH * .600, SCREENHEIGHT * .45))
         screen.blit(ASTRNTIMAGE, (SCREENWIDTH * .775, SCREENHEIGHT * .45))
+
+        # Theme Selection
+        ThemeText = MedFont.render("Theme:", True, WHITE)
+        screen.blit(ThemeText, (SCREENWIDTH * .075, SCREENHEIGHT * .65))
+
         submitButtton = Button((SCREENWIDTH / 2) - (StartGame.get_width() / 2) - 5, SCREENHEIGHT * .9,StartGame.get_width() + 10, StartGame.get_height(), MEDUIMBLUE, NAVYBLUE)
 
         screen.blit(StartGame, ((SCREENWIDTH / 2) - (StartGame.get_width() / 2), int(SCREENHEIGHT * .9)))
 
-        global USERNAME
         if submitButtton:
             if NEWUSER != "":
                 USERNAME = NEWUSER
@@ -453,7 +439,7 @@ def GameMenu():
             else:
                 USERNAME = 'GuestUser'
                 UserData['USERNAME'] = USERNAME
-	    if USERCHOICE != "":
+            if USERCHOICE != "":
                 UserData['USERCHOICE'] = USERCHOICE
             else:
                 USERCHOICE = 'Bird'
@@ -463,25 +449,24 @@ def GameMenu():
             else:
                 THEMECHOICE = 'DayBg'
                 UserData['THEMECHOICE'] = THEMECHOICE
-		
-            SuccessScreen(USERNAME, UserChoice)
+
+            SuccessScreen(USERNAME, USERCHOICE, THEMECHOICE)
 
         pygame.display.update()
         clock.tick(FPS / 4)
 
-def SuccessScreen(USERNAME, UserChoice):
+def SuccessScreen(USERNAME, USERCHOICE, THEMECHOICE):
     TitleText = SmallFont.render(TITLE, True, MEDUIMBLUE)
 
     while True:
         screen.fill((105,213,238))
         screen.blit(TitleText, ((SCREENWIDTH - TitleText.get_width()) / 2, 0))
-	
-	# Refactoring ....
+
         DText("Hello, " + USERNAME + ".", SCREENWIDTH * 0.5, SCREENHEIGHT * 0.25)
         DText("Your User Choice is: " + USERCHOICE + ".", SCREENWIDTH * 0.5, SCREENHEIGHT * 0.375)
         DText("Your Theme Choice is: " + THEMECHOICE + ".", SCREENWIDTH * 0.5, SCREENHEIGHT * 0.5)
         DText("Press 'space' key to play game or 'esc' key to return Home.", SCREENWIDTH * 0.5, SCREENHEIGHT * 0.625)
-
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 UserData.close()
@@ -497,7 +482,7 @@ def SuccessScreen(USERNAME, UserChoice):
         pygame.display.update()
         clock.tick(FPS / 4)
 
-       
-# This is loop for Main Game
+# Game loop
 while True:
     WelcomePage()
+
