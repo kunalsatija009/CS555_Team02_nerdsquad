@@ -289,6 +289,10 @@ def WelcomePage():
 
         else:
             screen.blit(BackGround, [0, 0])
+		GameoverSound.play()
+            import time
+            time.sleep(2) # wait and let the sound play for 2 second
+            GameoverSound.stop()
             DText('Game Over', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.25)
             DText('Use "space" key to Replay or "esc" key to return Home', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.375)
 
