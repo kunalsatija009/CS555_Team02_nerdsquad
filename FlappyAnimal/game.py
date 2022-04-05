@@ -20,6 +20,10 @@ pygame.display.set_caption(TITLE)
 # Background Music
 mixer.music.load('assets/audio/bgmusic.mp3')
 mixer.music.play(-1)
+Mood1Music = 'assets/audio/mood1.mp3'
+Mood2Music = 'assets/audio/mood2.mp3'
+Mood3Music = 'assets/audio/mood3.mp3'
+Mood4Music = 'assets/audio/mood4.mp3'
 
 # Intialize of Fonts variable
 BigFont = pygame.font.SysFont("dejavusans", 100)
@@ -34,7 +38,7 @@ BackGround = pygame.transform.scale(BackGround, (SCREENWIDTH, SCREENHEIGHT))
 BIRDIMAGE = pygame.image.load('assets/sprites/Bird.png')
 PLANEIMAGE = pygame.image.load('assets/sprites/Plane01.png')
 FISHIMAGE = pygame.image.load('assets/sprites/Fish01.png')
-ASTRNTIMAGE = pygame.image.load('assets/sprites/astronaut01.png')
+ASTRNTIMAGE = pygame.image.load('assets/sprites/astronaut.png')
 STARIMAGE = pygame.image.load("assets/sprites/gold-sprite.png")
 
 # To save and load User data
