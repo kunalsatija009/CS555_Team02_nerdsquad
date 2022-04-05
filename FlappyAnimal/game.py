@@ -312,7 +312,7 @@ def WelcomePage():
 def GameMenu():
     TitleText = SmallFont.render("The Flappy Animal Game", True, MEDUIMBLUE)
     
-    global NEWUSER
+    global NEWUSER, USERCHOICE, USERNAME, THEMECHOICE
 
     # Active - deactive upon selection
     UNameActive = False
@@ -353,12 +353,24 @@ def GameMenu():
                     UNameActive = True
                 elif BirdBorder.collidepoint(event.pos):
                     BirdActive = True
+                    FishActive = False
+                    PlaneActive = False
+                    AstrntActive = False
                 elif PlaneBorder.collidepoint(event.pos):
                     PlaneActive = True
+		    FishActive = False
+                    BirdActive = False
+                    AstrntActive = False
                 elif FishBorder.collidepoint(event.pos):
                     FishActive = True
+		    BirdActive = False
+                    PlaneActive = False
+                    AstrntActive = False
                 elif AstrntBorder.collidepoint(event.pos):
                     AstrntActive = True
+                    FishActive = False
+                    BirdActive = False
+                    PlaneActive = False
                 else:
                     UNameActive = False
                     BirdActive = False
