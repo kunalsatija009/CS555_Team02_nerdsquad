@@ -151,7 +151,7 @@ def dCollision(pipes):
 			HitSound.play()
 			return False
 
-	if UserRect.bottom >= 900 or UserRect.top <= -100:
+	if UserRect.bottom >= 995 or UserRect.top <= -105:
 		Is_Score = True
 		return False
 
@@ -168,16 +168,15 @@ def PipeScore():
                 PointSound.play()
                 Is_Score = False
 
-def ScoreBoard(IsGame):
+def ScoreBoard(IsGame, score):
 	if IsGame == 'MainGame':
 		ScoreBlock = SmallFont.render(str(int(SCORE)),True, WHITE)
 		ScoreRect = ScoreBlock.get_rect(topleft = (20,20))
 		screen.blit(ScoreBlock,ScoreRect)
 	if IsGame == 'GameOver':
-		ScoreBlock = SmallFont.render(f'Score: {int(SCORE)}' ,True, WHITE)
-		ScoreRect = ScoreBlock.get_rect(center = (275,125))
-		
-		screen.blit(ScoreBlock,ScoreRect)
+		HSCORE = UserData['HIGHSCORE']
+         	if int(score) > HSCORE:
+            	UserData['HIGHSCORE'] = score
 		
 # Sprint 03 Work -Random generation of star in game for the points.- Malhar / Darshil		
 #def star():
@@ -198,7 +197,10 @@ def WelcomePage():
     today = date.today()
     todayText =  today.strftime("%A , %B  %D") 
     todayText = SmallFont.render(todayText, True, NAVYBLUE)
-    HIGH_SCORE = SmallFont.render("HighestScore",True, NAVYBLUE)
+    if not UserData['HIGHSCORE']:
+        UserData['HIGHSCORE'] = HIGH_SCORE
+    HSCORE = UserData['HIGHSCORE']
+    HIGHSCORE = SmallFont.render("HighestScore: ", + str(HSCORE), True, NAVYBLUE)
    
 
     while True:
@@ -206,7 +208,7 @@ def WelcomePage():
         screen.blit(BackGround, [0, 0])
         screen.blit(todayText, (5, 10))
         screen.blit(TitleText, ((SCREENWIDTH - TitleText.get_width()) / 2, 10))
-        screen.blit(HIGH_SCORE, (SCREENWIDTH -  125, 10)) 
+        screen.blit(HIGHSCORE, (SCREENWIDTH -  125, 10)) 
 
         BackGround_rect = BackGround.get_rect()
         screen.blit(BackGround, (BackGround_rect.width, 0))
@@ -285,7 +287,7 @@ def WelcomePage():
 
 		    # Score settings
             PipeScore()
-            ScoreBoard('MainGame')
+            ScoreBoard('MainGame', 0)
 
         else:
             screen.blit(BackGround, [0, 0])
@@ -293,8 +295,11 @@ def WelcomePage():
             import time
             time.sleep(2) # wait and let the sound play for 2 second
             GameoverSound.stop()
+	    UserData['SCORE'] = SCORE
             DText('Game Over', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.25)
-            DText('Use "space" key to Replay or "esc" key to return Home', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.375)
+	    DText('Your Score: ' + str(SCORE), SCREENWIDTH * 0.5, SCREENHEIGHT * 0.375)
+            DText('Use "space" key to Replay or "esc" key to return Home', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.5)
+	    ScoreBoard('GameOver', SCORE)
 
 	# Ground - Base Setting
         GroundX_Pos -= 1
