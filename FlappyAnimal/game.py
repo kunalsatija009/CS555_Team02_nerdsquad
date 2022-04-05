@@ -13,28 +13,28 @@ pygame.init()
 # Setting of clock for game
 clock = pygame.time.Clock()
 
-# Background Music
-mixer.music.load('assets/audio/bgmusic.mp3')
-mixer.music.play(-1)
-
 # Create the screen
 screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT))
 pygame.display.set_caption(TITLE)
+
+# Background Music
+mixer.music.load('assets/audio/bgmusic.mp3')
+mixer.music.play(-1)
 
 # Intialize of Fonts variable
 BigFont = pygame.font.SysFont("dejavusans", 100)
 MedFont = pygame.font.SysFont("dejavusans", 50)
 SmallFont = pygame.font.SysFont("dejavusans", 25)
 
-# BackGround images   
+# BackGround image   
 BackGround = pygame.image.load("assets/sprites/BackGround.png").convert()
 BackGround = pygame.transform.scale(BackGround, (SCREENWIDTH, SCREENHEIGHT))
 
-# Players images
+# Players Image
 BIRDIMAGE = pygame.image.load('assets/sprites/Bird.png')
 PLANEIMAGE = pygame.image.load('assets/sprites/Plane01.png')
 FISHIMAGE = pygame.image.load('assets/sprites/Fish01.png')
-ASTRNTIMAGE = pygame.image.load('assets/sprites/astronaut01.png') 
+ASTRNTIMAGE = pygame.image.load('assets/sprites/astronaut01.png')
 
 # To save and load User data
 UserData = shelve.open("UserData")
@@ -48,9 +48,10 @@ GroundX_Pos = 0
 # Obstecle VAriables and settings
 GreenPipe = pygame.image.load('assets/sprites/GreenPipe.png')
 GreenPipe = pygame.transform.scale2x(GreenPipe)
-#GreenPipe = pygame.transform.scale(GreenPipe, (int(168), int(568)))
 GreenPipeList = []
 PipeHeight = [400,450,500]
+
+
 
 # Events
 XUserEvent = pygame.USEREVENT + 1
@@ -88,12 +89,14 @@ def KeyWait():
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-		UserData.close()
+                UserData.close()
                 pygame.quit()
                 sys.exit(0)
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
                     USERNAME == "GuestUser"
+                    USERCHOICE == "Bird"
+                    THEMECHOICE == "DayBg"
                     waiting = False
                     run = True
                     while run:
@@ -113,7 +116,7 @@ def Button(x_pos, y_pos, width, height, color, hover):
         else:
              pygame.draw.rect(screen, color, (x_pos, y_pos, width, height))
 
-# Text Function - Refactoring 
+# Text Function
 def DText(txt, x, y):
     dTxt = SmallFont.render(str(txt), True, NAVYBLUE)
     TxtRct = dTxt.get_rect(midtop = (x , y))
@@ -122,7 +125,13 @@ def DText(txt, x, y):
 def BuildGround():
 	screen.blit(Ground,(GroundX_Pos,610))
 	screen.blit(Ground,(GroundX_Pos + SCREENWIDTH,610))
-	
+ 
+def Coins():
+    CoinPosition = random.choice(90,450,90)
+    COINIMAGE = pygame.transform.scale2x(COINIMAGE)
+    TopCoin = COINIMAGE.get_rect(midbottom = (SCREENWIDTH +220 ,PipePosition-350))
+    BottomCoin = COINIMAGE.get_rect(midtop = (SCREENWIDTH +210 ,PipePosition))
+    return TopCoin,BottomCoin
 
 def BuildPipe():
 	PipePosition = random.choice(PipeHeight)
@@ -163,7 +172,7 @@ def PipeScore():
         for p in GreenPipeList:
             if p.centerx < 0:
                 Is_Score = True
-            elif 110 > p.centerx > 90 and Is_Score:
+            elif 105 > p.centerx > 95 and Is_Score:
                 SCORE += 1
                 PointSound.play()
                 Is_Score = False
@@ -173,24 +182,11 @@ def ScoreBoard(IsGame, score):
 		ScoreBlock = SmallFont.render(str(int(SCORE)),True, WHITE)
 		ScoreRect = ScoreBlock.get_rect(topleft = (20,20))
 		screen.blit(ScoreBlock,ScoreRect)
-	if IsGame == 'GameOver':
-		HSCORE = UserData['HIGHSCORE']
-         	if int(score) > HSCORE:
-            	UserData['HIGHSCORE'] = score
-		
-# Sprint 03 Work -Random generation of star in game for the points.- Malhar / Darshil		
-#def star():
-#def ScoreStar():
-	
-# Sprint 03 Work - Creattion of four types different Background Music and 
-# play function to play in background while game is ON - Praveen / Aishwariya
-#def BackgroundMusic()
+	elif IsGame == 'GameOver':
+         HSCORE = UserData['HIGHSCORE']
+         if int(score) > HSCORE:
+            UserData['HIGHSCORE'] = score
 
-# Sprint 03 Work -  Return function to return to main page and place it at when game is over. - Aditya
-#def ReturnToHome(): 
-
-# Sprint 03 Work  - Dixa will work on user menu selection and build game accordingly.
-	
 # Welcome page on the screen 
 def WelcomePage():
     TitleText = SmallFont.render("Flappy Animal", True, NAVYBLUE)
@@ -200,7 +196,7 @@ def WelcomePage():
     if not UserData['HIGHSCORE']:
         UserData['HIGHSCORE'] = HIGH_SCORE
     HSCORE = UserData['HIGHSCORE']
-    HIGHSCORE = SmallFont.render("HighestScore: ", + str(HSCORE), True, NAVYBLUE)
+    HIGHSCORE = SmallFont.render("HighestScore: " + str(HSCORE) ,True, NAVYBLUE)
    
 
     while True:
@@ -208,19 +204,17 @@ def WelcomePage():
         screen.blit(BackGround, [0, 0])
         screen.blit(todayText, (5, 10))
         screen.blit(TitleText, ((SCREENWIDTH - TitleText.get_width()) / 2, 10))
-        screen.blit(HIGHSCORE, (SCREENWIDTH -  125, 10)) 
+        screen.blit(HIGHSCORE, (SCREENWIDTH -  150, 10)) 
 
         BackGround_rect = BackGround.get_rect()
         screen.blit(BackGround, (BackGround_rect.width, 0))
-	
-	# Refactroing 
+
         DText('Space key to start as Guest User', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.25)
         DText('Enter or Return key to choose settings', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.375)
         DText('Use Space key to move', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.5)
 
         pygame.display.flip()
-        KeyWait()
-	
+        KeyWait()	
  def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
     #TitleText = SmallFont.render(TITLE, True, MEDUIMBLUE)
     global IS_ACTIVE, PLAYER_MOVEMENT, UserSprites, UserRect, GreenPipeList, GroundX_Pos, PLAYER_INDEX, SCORE, HIGH_SCORE
