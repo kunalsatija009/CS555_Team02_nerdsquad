@@ -41,6 +41,12 @@ FISHIMAGE = pygame.image.load('assets/sprites/Fish01.png')
 ASTRNTIMAGE = pygame.image.load('assets/sprites/astronaut.png')
 STARIMAGE = pygame.image.load("assets/sprites/gold-sprite.png")
 
+# Theme Image
+SKYBG = pygame.image.load('assets/sprites/SkyBG.png')
+SPACEBG = pygame.image.load('assets/sprites/space1.jpg')
+WTRBG = pygame.image.load('assets/sprites/WtrBg1.png')
+DARKBG = pygame.image.load('assets/sprites/DrkBg.png')
+
 # To save and load User data
 UserData = shelve.open("UserData")
 
@@ -85,6 +91,11 @@ class XUser:
     def UserTransform(self, XSprites):
         XUserSprites = pygame.transform.rotozoom(XSprites, (PLAYER_MOVEMENT * -2) ,1)
         return XUserSprites
+
+def Back_Ground(lnk):
+    bg = pygame.image.load(lnk).convert()
+    bg = pygame.transform.scale(bg, (SCREENWIDTH, SCREENHEIGHT)) 
+    return bg 
 
 # wait function 
 def KeyWait():
@@ -231,6 +242,16 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
         dUser = XUser('assets/sprites/astronaut.png')
     else:
         dUser = XUser('assets/sprites/Bird1.png')
+	
+	
+    if THEMECHOICE == 'Space':
+        dBg = Back_Ground('assets/sprites/space.jpg')
+    elif THEMECHOICE == 'UnderWater':
+        dBg = Back_Ground('assets/sprites/WtrBg.png')
+    elif THEMECHOICE == 'DarkBg':
+        dBg = Back_Ground('assets/sprites/DarkBG.png')
+    else:
+        dBg = Back_Ground('assets/sprites/BackGround.png')
 
     while True:
         for event in pygame.event.get():
@@ -252,6 +273,7 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
                 if event.key == pygame.K_ESCAPE:
                     USERCHOICE = 'Bird'
                     dUser = XUser('assets/sprites/Bird1.png')
+		    dBg = Back_Ground('assets/sprites/BackGround.png')
                     IS_ACTIVE = True
                     GreenPipeList.clear()
                     UserRect.center = (100,325)
@@ -268,7 +290,7 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
                 else:
                     PLAYER_INDEX = 0
                 
-        screen.blit(BackGround,(0,0))
+        screen.blit(dBg,(0,0))
         if IS_ACTIVE:
             # Player setting
             PLAYER_MOVEMENT += GRAVITY
@@ -278,10 +300,10 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
             UserRect.centery += PLAYER_MOVEMENT
             screen.blit(UserFlip,UserRect)
             IS_ACTIVE = dCollision(GreenPipeList)
-		    # Pipes settings
+	    # Pipes settings
             GreenPipeList = PipesMotion(GreenPipeList)
             PipeTransform(GreenPipeList)
-		    # Score settings
+	    # Score settings
             PipeScore()
             ScoreBoard('MainGame', 0)
 
@@ -297,7 +319,7 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
             DText('Use "space" key to Replay or "esc" key to return Home', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.5)
             ScoreBoard('GameOver', SCORE)
             
-	    # Ground - Base Setting
+	# Ground - Base Setting
         GroundX_Pos -= 1
         BuildGround()
         if (SCREENWIDTH * -1) >= GroundX_Pos:
@@ -317,6 +339,10 @@ def GameMenu():
     PlaneActive = False
     FishActive = False
     AstrntActive = False
+    SkyBgActive = False
+    SpaceBgActive = False
+    WtrBgActive = False
+    DarkBgActive = False
     
     UserChoicePrompt = SmallFont.render("Select your choices", True, MEDUIMBLUE)
     StartGame = SmallFont.render("Start Game", True, WHITE)
@@ -335,7 +361,13 @@ def GameMenu():
         PlaneBorder = pygame.Rect(((SCREENWIDTH - PLANEIMAGE.get_width()) * .462) - 4, (SCREENHEIGHT * .45) - 4, PLANEIMAGE.get_width() + 8, PLANEIMAGE.get_height() + 8)
         FishBorder = pygame.Rect(((SCREENWIDTH - FISHIMAGE.get_width()) * .650) - 4, (SCREENHEIGHT * .45) - 4, FISHIMAGE.get_width() + 8, FISHIMAGE.get_height() + 8)
         AstrntBorder = pygame.Rect(((SCREENWIDTH - ASTRNTIMAGE.get_width()) * .840) - 4, (SCREENHEIGHT * .45) - 4, ASTRNTIMAGE.get_width() + 8, ASTRNTIMAGE.get_height() + 8)
-
+	
+	# Border for Theme Images
+        SkyBgBorder = pygame.Rect((SCREENWIDTH * .250) - 4, (SCREENHEIGHT * .65) - 4, SKYBG.get_width() + 8, SKYBG.get_height() + 8)
+        SpaceBorder = pygame.Rect(((SCREENWIDTH - SPACEBG.get_width()) * .462) - 4, (SCREENHEIGHT * .65) - 4, SPACEBG.get_width() + 8, SPACEBG.get_height() + 8)
+        WtrBorder =  pygame.Rect(((SCREENWIDTH - WTRBG.get_width()) * .650) - 4, (SCREENHEIGHT * .65) - 4, WTRBG.get_width() + 8, WTRBG.get_height() + 8)
+        DarkBoder = pygame.Rect(((SCREENWIDTH - DARKBG.get_width()) * .840) - 4, (SCREENHEIGHT * .65) - 4, DARKBG.get_width() + 8, DARKBG.get_height() + 8)
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 UserData.close()
@@ -366,12 +398,36 @@ def GameMenu():
                     FishActive = False
                     BirdActive = False
                     PlaneActive = False
+		elif SkyBgBorder.collidepoint(event.pos):
+                    SkyBgActive = True
+                    SpaceBgActive = False
+                    WtrBgActive = False
+                    DarkBgActive = False
+                elif SpaceBorder.collidepoint(event.pos):
+                    SkyBgActive = False
+                    SpaceBgActive = True
+                    WtrBgActive = False
+                    DarkBgActive = False
+                elif WtrBorder.collidepoint(event.pos):
+                    SkyBgActive = False
+                    SpaceBgActive = False
+                    WtrBgActive = True
+                    DarkBgActive = False
+                elif DarkBoder.collidepoint(event.pos):
+                    SkyBgActive = False
+                    SpaceBgActive = False
+                    WtrBgActive = False
+                    DarkBgActive = True
                 else:
                     UNameActive = False
                     BirdActive = False
                     PlaneActive = False
                     FishActive = False
                     AstrntActive = False
+		    SkyBgActive = False
+                    SpaceBgActive = False
+                    WtrBgActive = False
+                    DarkBgActive = False
 
             if event.type == pygame.KEYDOWN:
                 if UNameActive:
@@ -410,7 +466,30 @@ def GameMenu():
             pygame.draw.rect(screen, WHITE, AstrntBorder, 2)
             USERCHOICE = "Astronaut"
         else:
-            pygame.draw.rect(screen, NAVYBLUE, AstrntBorder, 2) 
+            pygame.draw.rect(screen, NAVYBLUE, AstrntBorder, 2)
+	
+	if SkyBgActive:
+            pygame.draw.rect(screen, WHITE, SkyBgBorder, 2)
+            THEMECHOICE = "Sky"
+        else:
+            pygame.draw.rect(screen, NAVYBLUE, SkyBgBorder, 2)
+	
+        if SpaceBgActive:
+            pygame.draw.rect(screen, WHITE, SpaceBorder, 2)
+            THEMECHOICE = "Space"
+        else:
+            pygame.draw.rect(screen, NAVYBLUE, SpaceBorder, 2)
+	
+	if WtrBgActive:
+            pygame.draw.rect(screen, WHITE, WtrBorder, 2)
+            THEMECHOICE = "UnderWater"
+        else:
+            pygame.draw.rect(screen, NAVYBLUE, WtrBorder, 2)
+        if DarkBgActive:
+            pygame.draw.rect(screen, WHITE, DarkBoder, 2)
+            THEMECHOICE = "DarkBg"
+        else:
+            pygame.draw.rect(screen, NAVYBLUE, DarkBoder, 2)
 
         screen.blit(USERNAMEPrompt, ((SCREENWIDTH - USERNAMEPrompt.get_width()) / 2, (SCREENHEIGHT * .05) + UserNameText.get_height()))
         screen.blit(UserChoicePrompt, ((SCREENWIDTH - UserChoicePrompt.get_width()) / 2, SCREENHEIGHT * .35))
@@ -426,7 +505,11 @@ def GameMenu():
         # Theme Selection
         ThemeText = MedFont.render("Theme:", True, WHITE)
         screen.blit(ThemeText, (SCREENWIDTH * .075, SCREENHEIGHT * .65))
-
+        screen.blit(SKYBG, (SCREENWIDTH * .250, SCREENHEIGHT * .65))
+        screen.blit(SPACEBG, (SCREENWIDTH * .425, SCREENHEIGHT * .65))
+        screen.blit(WTRBG, (SCREENWIDTH * .600, SCREENHEIGHT * .65))
+        screen.blit(DARKBG, (SCREENWIDTH * .775, SCREENHEIGHT * .65))
+	
         submitButtton = Button((SCREENWIDTH / 2) - (StartGame.get_width() / 2) - 5, SCREENHEIGHT * .9,StartGame.get_width() + 10, StartGame.get_height(), MEDUIMBLUE, NAVYBLUE)
 
         screen.blit(StartGame, ((SCREENWIDTH / 2) - (StartGame.get_width() / 2), int(SCREENHEIGHT * .9)))
@@ -446,7 +529,7 @@ def GameMenu():
             if THEMECHOICE != "":
                 UserData['THEMECHOICE'] = THEMECHOICE
             else:
-                THEMECHOICE = 'DayBg'
+                THEMECHOICE = 'Sky'
                 UserData['THEMECHOICE'] = THEMECHOICE
 
             SuccessScreen(USERNAME, USERCHOICE, THEMECHOICE)
