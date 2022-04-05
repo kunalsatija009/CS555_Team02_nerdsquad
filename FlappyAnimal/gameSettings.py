@@ -2,7 +2,7 @@
 # Screen Variables Setting
 TITLE = "The Flappy Animal Game"
 SCREENWIDTH = 1080  
-SCREEN_HEIGHT = 650  
+SCREENHEIGHT = 650  
 FPS = 60               # frame per second
 
 # Colors Variables Setting
