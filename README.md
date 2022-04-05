@@ -23,8 +23,7 @@ Flappy animal is a simple game and the concept is extract from famous game “Fl
 ### Requirements:
 1. IDE Platfrom we used Visual studio code.
 2. Python 3 -> Download from https://www.python.org/downloads/
-3. Install pygame : Use this Command ->  pip install pygame
-4. Active virtual environment for pygame.
-5. To run project, select game.py and click on run or (ctrl + F5)
-
-
+3. Run this command in Visual studio code terminal to activate virtual environment: .venv\scripts\activate 
+4. Run this command in Visual studio code terminal to upgrade pip: python -m pip install --upgrade pip
+5. Run this command in Visual studio code terminal to Install pygame : Use this Command ->  pip install pygame
+6. To run project, select game.py and click on run or (ctrl + F5)
