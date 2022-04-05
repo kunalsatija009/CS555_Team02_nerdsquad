@@ -35,6 +35,7 @@ BIRDIMAGE = pygame.image.load('assets/sprites/Bird.png')
 PLANEIMAGE = pygame.image.load('assets/sprites/Plane01.png')
 FISHIMAGE = pygame.image.load('assets/sprites/Fish01.png')
 ASTRNTIMAGE = pygame.image.load('assets/sprites/astronaut01.png')
+STARIMAGE = pygame.image.load("assets/sprites/gold-sprite.png")
 
 # To save and load User data
 UserData = shelve.open("UserData")
@@ -126,12 +127,12 @@ def BuildGround():
 	screen.blit(Ground,(GroundX_Pos,610))
 	screen.blit(Ground,(GroundX_Pos + SCREENWIDTH,610))
  
-def Coins():
-    CoinPosition = random.choice(90,450,90)
-    COINIMAGE = pygame.transform.scale2x(COINIMAGE)
-    TopCoin = COINIMAGE.get_rect(midbottom = (SCREENWIDTH +220 ,PipePosition-350))
-    BottomCoin = COINIMAGE.get_rect(midtop = (SCREENWIDTH +210 ,PipePosition))
-    return TopCoin,BottomCoin
+def Stars():
+    StarPosition = random.choice(90,450,90)
+    STARIMAGE = pygame.transform.scale2x(STARIMAGE)
+    TopStar = STARIMAGE.get_rect(midbottom = (SCREENWIDTH +220 ,PipePosition-350))
+    BottomStar = STARIMAGE.get_rect(midtop = (SCREENWIDTH +210 ,PipePosition))
+    return TopStar,BottomStar
 
 def BuildPipe():
 	PipePosition = random.choice(PipeHeight)
