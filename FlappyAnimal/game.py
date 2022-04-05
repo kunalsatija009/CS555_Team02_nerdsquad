@@ -64,6 +64,7 @@ pygame.time.set_timer(SCOREEVENT,100)
 WingSound = pygame.mixer.Sound('assets/audio/wing.wav')
 HitSound= pygame.mixer.Sound('assets/audio/hit.wav')
 PointSound = pygame.mixer.Sound('assets/audio/point.wav')
+GameoverSound = pygame.mixer.Sound('assets/audio/Gameover.wav')
 
 # Player Variables and settings
 class XUser:
@@ -175,6 +176,7 @@ def ScoreBoard(IsGame):
 	if IsGame == 'GameOver':
 		ScoreBlock = SmallFont.render(f'Score: {int(SCORE)}' ,True, WHITE)
 		ScoreRect = ScoreBlock.get_rect(center = (275,125))
+		GameoverSound.play()
 		screen.blit(ScoreBlock,ScoreRect)
 		
 # Sprint 03 Work -Random generation of star in game for the points.- Malhar / Darshil		
