@@ -215,7 +215,7 @@ def WelcomePage():
 
         pygame.display.flip()
         KeyWait()	
- def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
+def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
     #TitleText = SmallFont.render(TITLE, True, MEDUIMBLUE)
     global IS_ACTIVE, PLAYER_MOVEMENT, UserSprites, UserRect, GreenPipeList, GroundX_Pos, PLAYER_INDEX, SCORE, HIGH_SCORE
     if USERCHOICE == 'Plane':
