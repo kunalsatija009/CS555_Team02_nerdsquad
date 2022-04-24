@@ -161,6 +161,12 @@ def BuildPipe():
 	BottomPipe = GreenPipe.get_rect(midtop = (SCREENWIDTH +200 ,PipePosition))
 	return TopPipe,BottomPipe
 
+def BuildStar():
+    StarVerticalPosition = random.choice(StarHeight)
+    HorizontalPosition = random.choice(StarHorizontalPositions)
+
+    return Star.get_rect(midtop = (SCREENWIDTH + HorizontalPosition, StarVerticalPosition))
+
 def PipeTransform(pipes):
     for p in pipes:
         if p.bottom < SCREENHEIGHT:
