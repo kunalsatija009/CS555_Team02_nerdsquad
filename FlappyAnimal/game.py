@@ -10,6 +10,9 @@ import shelve # shelve is One of the standardLibrary to communicate with directo
 # Initialization of pygame
 pygame.init()
 
+# Initialization of mixer for music
+mixer.init()
+
 # Setting of clock for game
 clock = pygame.time.Clock()
 
@@ -17,17 +20,9 @@ clock = pygame.time.Clock()
 screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT))
 pygame.display.set_caption(TITLE)
 
-# Background Music
-mixer.music.load('assets/audio/bgmusic.mp3')
-mixer.music.play(-1)
-Mood1Music = 'assets/audio/mood1.mp3'
-Mood2Music = 'assets/audio/mood2.mp3'
-Mood3Music = 'assets/audio/mood3.mp3'
-Mood4Music = 'assets/audio/mood4.mp3'
-
 # Intialize of Fonts variable
-BigFont = pygame.font.SysFont("dejavusans", 100)
-MedFont = pygame.font.SysFont("dejavusans", 50)
+BigFont = pygame.font.SysFont("dejavusans", 55)
+MedFont = pygame.font.SysFont("dejavusans", 40)
 SmallFont = pygame.font.SysFont("dejavusans", 25)
 
 # BackGround image   
@@ -38,8 +33,7 @@ BackGround = pygame.transform.scale(BackGround, (SCREENWIDTH, SCREENHEIGHT))
 BIRDIMAGE = pygame.image.load('assets/sprites/Bird.png')
 PLANEIMAGE = pygame.image.load('assets/sprites/Plane01.png')
 FISHIMAGE = pygame.image.load('assets/sprites/Fish01.png')
-ASTRNTIMAGE = pygame.image.load('assets/sprites/astronaut.png')
-STARIMAGE = pygame.image.load("assets/sprites/gold-sprite.png")
+ASTRNTIMAGE = pygame.image.load('assets/sprites/astronaut01.png')
 
 # Theme Image
 SKYBG = pygame.image.load('assets/sprites/SkyBG.png')
@@ -62,8 +56,6 @@ GreenPipe = pygame.transform.scale2x(GreenPipe)
 GreenPipeList = []
 PipeHeight = [400,450,500]
 
-
-
 # Events
 XUserEvent = pygame.USEREVENT + 1
 pygame.time.set_timer(XUserEvent,225)
@@ -77,6 +69,7 @@ WingSound = pygame.mixer.Sound('assets/audio/wing.wav')
 HitSound= pygame.mixer.Sound('assets/audio/hit.wav')
 PointSound = pygame.mixer.Sound('assets/audio/point.wav')
 GameoverSound = pygame.mixer.Sound('assets/audio/Gameover.wav')
+GameoverSound.set_volume(0.3)
 
 # Player Variables and settings
 class XUser:
@@ -109,6 +102,20 @@ def KeyWait():
                 pygame.quit()
                 sys.exit(0)
             elif event.type == pygame.KEYUP:
+		if event.key == pygame.K_1:
+                    mixer.music.load('assets/audio/SoftPiano.wav')
+                    mixer.music.play()
+                if event.key == pygame.K_2:
+                    mixer.music.load('assets/audio/summer.ogg')
+                    mixer.music.play()
+                if event.key == pygame.K_3:
+                    mixer.music.load('assets/audio/FridayNight.wav')
+                    mixer.music.play()
+                if event.key == pygame.K_4:
+                    mixer.music.load('assets/audio/Symphony.wav')
+                    mixer.music.play()
+                if event.key == pygame.K_5:
+                    mixer.music.stop()
                 if event.key == pygame.K_SPACE:
                     USERNAME == "GuestUser"
                     USERCHOICE == "Bird"
