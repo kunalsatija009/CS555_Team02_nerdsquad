@@ -228,6 +228,7 @@ def WelcomePage():
         DText('Space key to start as Guest User', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.25)
         DText('Enter or Return key to choose settings', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.375)
         DText('Use Space key to move', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.5)
+	DText('Use M to Mute sound', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.675)
 
         pygame.display.flip()
         KeyWait()	
