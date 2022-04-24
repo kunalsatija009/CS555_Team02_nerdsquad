@@ -228,7 +228,7 @@ def WelcomePage():
         DText('Space key to start as Guest User', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.25)
         DText('Enter or Return key to choose settings', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.375)
         DText('Use Space key to move', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.5)
-	DText('Use M to Mute sound', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.675)
+	DText('Use S to Mute sound', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.675)
 
         pygame.display.flip()
         KeyWait()	
@@ -265,6 +265,10 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
                     PLAYER_MOVEMENT = 0
                     PLAYER_MOVEMENT -= 12
                     WingSound.play()
+		
+		if event.type == pygame.K_s:
+                    pygame.mixer.music.stop()
+		
                 if event.key == pygame.K_SPACE and IS_ACTIVE == False:
                     IS_ACTIVE = True
                     GreenPipeList.clear()
