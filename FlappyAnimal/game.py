@@ -146,10 +146,10 @@ def Button(x_pos, y_pos, width, height, color, hover):
              pygame.draw.rect(screen, color, (x_pos, y_pos, width, height))
 
 # Text Function
-def DText(txt, x, y):
-    dTxt = SmallFont.render(str(txt), True, NAVYBLUE)
+def DText(txt, x, y, clr):
+    dTxt = SmallFont.render(str(txt), True, clr)
     TxtRct = dTxt.get_rect(midtop = (x , y))
-    screen.blit(dTxt, TxtRct)
+    screen.blit(dTxt, TxtRct) 
 
 def BuildGround():
 	screen.blit(Ground,(GroundX_Pos,610))
@@ -162,24 +162,24 @@ def BuildPipe():
 	return TopPipe,BottomPipe
 
 def BuildStar():
-    StarVerticalPosition = random.choice(StarHeight)
+    StarVerticalPosition = random.choice(StarVerticlePositions)
     HorizontalPosition = random.choice(StarHorizontalPositions)
-
     return Star.get_rect(midtop = (SCREENWIDTH + HorizontalPosition, StarVerticalPosition))
 
-def PipeTransform(pipes):
-    for p in pipes:
-        if p.bottom < SCREENHEIGHT:
-            TossPipe = pygame.transform.flip(GreenPipe, False, True)
-            screen.blit(TossPipe, p)
-        else:
-            screen.blit(GreenPipe, p)
 
-def PipesMotion(pipes):
-	for p in pipes:
-		p.centerx -= 4
-	dPipesList = [p for p in pipes if p.right > -25 ]
-	return dPipesList
+def ObjectTransform(obj, Onm):
+    for o in obj:
+        if o.bottom < SCREENHEIGHT:
+            TossObj = pygame.transform.flip(Onm, False, True)
+            screen.blit(TossObj, o)
+        else:
+            screen.blit(Onm, o)
+
+def ObjectMotion(Obj):
+	for o in Obj:
+		o.centerx -= 4
+	objList = [p for p in Obj if p.right > -25 ]
+	return objList
 
 def dCollision(pipes):
 	global Is_Score
@@ -193,6 +193,14 @@ def dCollision(pipes):
 		return False
 
 	return True
+
+def StarCollision(stars: list):
+    global SCORE
+    for s in stars:
+        if UserRect.colliderect(s):
+            PointSound.play()
+            stars.remove(s)
+            SCORE += 5
 
 def PipeScore():
     global SCORE, Is_Score
@@ -246,7 +254,8 @@ def WelcomePage():
         KeyWait()	
 def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
     #TitleText = SmallFont.render(TITLE, True, MEDUIMBLUE)
-    global IS_ACTIVE, PLAYER_MOVEMENT, UserSprites, UserRect, GreenPipeList, GroundX_Pos, PLAYER_INDEX, SCORE, HIGH_SCORE
+    global IS_ACTIVE, PLAYER_MOVEMENT, UserSprites, UserRect, GreenPipeList, GroundX_Pos, PLAYER_INDEX, SCORE, HIGH_SCORE, GreenPipe, Star, StarList, IS_PAUSE
+    IS_PAUSE = False 
     if USERCHOICE == 'Plane':
         dUser = XUser('assets/sprites/Plane.png')
     elif USERCHOICE == 'Fish':
@@ -314,7 +323,7 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
                     
             if event.type == PipeEvent:
                 GreenPipeList.extend(BuildPipe())
-
+                StarList.append(BuildStar())
             if event.type == XUserEvent:
                 if PLAYER_INDEX < 2:
                     PLAYER_INDEX += 1
@@ -331,13 +340,14 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
             UserRect.centery += PLAYER_MOVEMENT
             screen.blit(UserFlip,UserRect)
             IS_ACTIVE = dCollision(GreenPipeList)
-	    # star Setting
-	    StarCollision(StarList)
-	    StarTransform(StarList)
-	    # Pipes settings
-            GreenPipeList = PipesMotion(GreenPipeList)
-            PipeTransform(GreenPipeList)
-	    # Score settings
+            StarCollision(StarList )
+	        # star Setting
+            StarList = ObjectMotion(StarList)
+            ObjectTransform(StarList, Star)
+	        # Pipes settings
+            GreenPipeList = ObjectMotion(GreenPipeList)
+            ObjectTransform(GreenPipeList, GreenPipe)
+	        # Score settings
             PipeScore()
             ScoreBoard('MainGame', 0)
         elif IS_PAUSE:  
@@ -351,9 +361,9 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
             time.sleep(2) # wait and let the sound play for 2 second
             GameoverSound.stop()
             UserData['SCORE'] = SCORE
-            DText('Game Over', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.25)
-            DText('Your Score: ' + str(SCORE), SCREENWIDTH * 0.5, SCREENHEIGHT * 0.375)
-            DText('Use "space" key to Replay or "esc" key to return Home', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.5)
+            DText('Game Over', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.25, NAVYBLUE)
+            DText('Your Score: ' + str(SCORE), SCREENWIDTH * 0.5, SCREENHEIGHT * 0.375, NAVYBLUE)
+            DText('Use "space" key to Replay or "esc" key to return Home', SCREENWIDTH * 0.5, SCREENHEIGHT * 0.5, NAVYBLUE)
             ScoreBoard('GameOver', SCORE)
             
 	# Ground - Base Setting
@@ -618,4 +628,3 @@ def SuccessScreen(USERNAME, USERCHOICE, THEMECHOICE):
 # Game loop
 while True:
     WelcomePage()
-
