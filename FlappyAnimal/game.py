@@ -588,6 +588,20 @@ def SuccessScreen(USERNAME, USERCHOICE, THEMECHOICE):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYUP:
+		if event.key == pygame.K_1:
+                    mixer.music.load('assets/audio/SoftPiano.wav')
+                    mixer.music.play()
+                if event.key == pygame.K_2:
+                    mixer.music.load('assets/audio/summer.ogg')
+                    mixer.music.play()
+                if event.key == pygame.K_3:
+                    mixer.music.load('assets/audio/FridayNight.wav')
+                    mixer.music.play()
+                if event.key == pygame.K_4:
+                    mixer.music.load('assets/audio/Symphony.wav')
+                    mixer.music.play()
+                if event.key == pygame.K_5:
+                    mixer.music.stop()
                 if event.key == pygame.K_SPACE:
                     MainGame(USERNAME, USERCHOICE, THEMECHOICE)
                 elif event.key == pygame.K_ESCAPE:
