@@ -197,10 +197,10 @@ def dCollision(pipes):
 def StarCollision(stars: list):
     global SCORE
     for s in stars:
-        if UserRect.colliderect(s):
+        if BirdRect.colliderect(s):
             PointSound.play()
             stars.remove(s)
-            SCORE += 5
+            SCORE += 1
 
 def PipeScore():
     global SCORE, Is_Score
