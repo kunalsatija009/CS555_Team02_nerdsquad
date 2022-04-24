@@ -232,10 +232,10 @@ def WelcomePage():
         BackGround_rect = BackGround.get_rect()
         screen.blit(BackGround, (BackGround_rect.width, 0))
 
-        DText('Space key to start as Guest User', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.25)
-        DText('Enter or Return key to choose settings', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.375)
-        DText('Use Space key to move', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.5)
-	DText('Use S to Mute sound', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.675)
+        DText('Space key to start as Guest User', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.25, NAVYBLUE)
+        DText('Enter or Return key to choose settings', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.375, NAVYBLUE)
+        DText('Use Space key to move & Key p to pause - unpause the game', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.5, NAVYBLUE)
+        DText('Key:- 1, 2, 3, 4 for music options & 5 to stop BG Music', SCREENWIDTH *  0.5, SCREENHEIGHT * 0.625, NAVYBLUE)
 
         pygame.display.flip()
         KeyWait()	
@@ -268,6 +268,24 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
+		 if event.key == pygame.K_1:
+                    mixer.music.load('assets/audio/SoftPiano.wav')
+                    mixer.music.play()
+                if event.key == pygame.K_2:
+                    mixer.music.load('assets/audio/summer.ogg')
+                    mixer.music.play()
+                if event.key == pygame.K_3:
+                    mixer.music.load('assets/audio/FridayNight.wav')
+                    mixer.music.play()
+                if event.key == pygame.K_4:
+                    mixer.music.load('assets/audio/Symphony.wav')
+                    mixer.music.play()
+                if event.key == pygame.K_5:
+                    mixer.music.stop() 
+                if event.key == pygame.K_p:
+                    IS_PAUSE = not IS_PAUSE
+                    IS_ACTIVE = not IS_ACTIVE
+                    GreenPipeList.clear()
                 if event.key == pygame.K_SPACE and IS_ACTIVE:
                     PLAYER_MOVEMENT = 0
                     PLAYER_MOVEMENT -= 12
@@ -318,7 +336,10 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
 	    # Score settings
             PipeScore()
             ScoreBoard('MainGame', 0)
-
+        elif IS_PAUSE:  
+            GroundX_Pos = 0
+            screen.blit(dBg, [0, 0])
+            DText("Paused!", SCREENWIDTH * 0.5, SCREENHEIGHT * 0.25, GREEN)
         else:
             screen.blit(BackGround, [0, 0])
             GameoverSound.play()
