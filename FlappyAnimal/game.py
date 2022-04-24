@@ -55,7 +55,13 @@ GreenPipe = pygame.image.load('assets/sprites/GreenPipe.png')
 GreenPipe = pygame.transform.scale2x(GreenPipe)
 GreenPipeList = []
 PipeHeight = [400,450,500]
+# Star
 
+Star = pygame.image.load('assets/sprites/star.png')
+Star = pygame.transform.scale(Star, (60, 60))
+StarList = []
+StarVerticlePositions = [200,250,300,350,400]
+StarHorizontalPositions = [400,450,500,550,600]
 # Events
 XUserEvent = pygame.USEREVENT + 1
 pygame.time.set_timer(XUserEvent,225)
@@ -319,6 +325,9 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
             UserRect.centery += PLAYER_MOVEMENT
             screen.blit(UserFlip,UserRect)
             IS_ACTIVE = dCollision(GreenPipeList)
+	    # star Setting
+	    StarCollision(StarList)
+	    StarTransform(StarList)
 	    # Pipes settings
             GreenPipeList = PipesMotion(GreenPipeList)
             PipeTransform(GreenPipeList)
