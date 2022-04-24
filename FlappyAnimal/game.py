@@ -102,7 +102,7 @@ def KeyWait():
                 pygame.quit()
                 sys.exit(0)
             elif event.type == pygame.KEYUP:
-		if event.key == pygame.K_1:
+                if event.key == pygame.K_1:
                     mixer.music.load('assets/audio/SoftPiano.wav')
                     mixer.music.play()
                 if event.key == pygame.K_2:
@@ -148,13 +148,6 @@ def DText(txt, x, y):
 def BuildGround():
 	screen.blit(Ground,(GroundX_Pos,610))
 	screen.blit(Ground,(GroundX_Pos + SCREENWIDTH,610))
- 
-def Stars():
-    StarPosition = random.choice(90,450,90)
-    STARIMAGE = pygame.transform.scale2x(STARIMAGE)
-    TopStar = STARIMAGE.get_rect(midbottom = (SCREENWIDTH +220 ,PipePosition-350))
-    BottomStar = STARIMAGE.get_rect(midtop = (SCREENWIDTH +210 ,PipePosition))
-    return TopStar,BottomStar
 
 def BuildPipe():
 	PipePosition = random.choice(PipeHeight)
@@ -268,7 +261,7 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-		 if event.key == pygame.K_1:
+                if event.key == pygame.K_1:
                     mixer.music.load('assets/audio/SoftPiano.wav')
                     mixer.music.play()
                 if event.key == pygame.K_2:
@@ -290,10 +283,6 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
                     PLAYER_MOVEMENT = 0
                     PLAYER_MOVEMENT -= 12
                     WingSound.play()
-		
-		if event.type == pygame.K_s:
-                    pygame.mixer.music.stop()
-		
                 if event.key == pygame.K_SPACE and IS_ACTIVE == False:
                     IS_ACTIVE = True
                     GreenPipeList.clear()
@@ -303,7 +292,7 @@ def MainGame(USERNAME, USERCHOICE, THEMECHOICE):
                 if event.key == pygame.K_ESCAPE:
                     USERCHOICE = 'Bird'
                     dUser = XUser('assets/sprites/Bird1.png')
-		    dBg = Back_Ground('assets/sprites/BackGround.png')
+                    dBg = Back_Ground('assets/sprites/BackGround.png')
                     IS_ACTIVE = True
                     GreenPipeList.clear()
                     UserRect.center = (100,325)
@@ -431,7 +420,7 @@ def GameMenu():
                     FishActive = False
                     BirdActive = False
                     PlaneActive = False
-		elif SkyBgBorder.collidepoint(event.pos):
+                elif SkyBgBorder.collidepoint(event.pos):
                     SkyBgActive = True
                     SpaceBgActive = False
                     WtrBgActive = False
@@ -457,7 +446,7 @@ def GameMenu():
                     PlaneActive = False
                     FishActive = False
                     AstrntActive = False
-		    SkyBgActive = False
+                    SkyBgActive = False
                     SpaceBgActive = False
                     WtrBgActive = False
                     DarkBgActive = False
@@ -500,8 +489,8 @@ def GameMenu():
             USERCHOICE = "Astronaut"
         else:
             pygame.draw.rect(screen, NAVYBLUE, AstrntBorder, 2)
-	
-	if SkyBgActive:
+            
+        if SkyBgActive:
             pygame.draw.rect(screen, WHITE, SkyBgBorder, 2)
             THEMECHOICE = "Sky"
         else:
@@ -512,8 +501,8 @@ def GameMenu():
             THEMECHOICE = "Space"
         else:
             pygame.draw.rect(screen, NAVYBLUE, SpaceBorder, 2)
-	
-	if WtrBgActive:
+            
+        if WtrBgActive:
             pygame.draw.rect(screen, WHITE, WtrBorder, 2)
             THEMECHOICE = "UnderWater"
         else:
@@ -588,7 +577,7 @@ def SuccessScreen(USERNAME, USERCHOICE, THEMECHOICE):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYUP:
-		if event.key == pygame.K_1:
+                if event.key == pygame.K_1:
                     mixer.music.load('assets/audio/SoftPiano.wav')
                     mixer.music.play()
                 if event.key == pygame.K_2:
