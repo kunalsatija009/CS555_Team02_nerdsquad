@@ -1,13 +1,14 @@
 import pygame
 import unittest
 
+from gameSettings import IS_ACTIVE
 
 pygame.init()    
 pygame.event.get()
 
-# Space, Enter, Escape key test
-class TestInputKey(unittest.TestCase):
-    def MouseClick(self):
+
+class Test(unittest.TestCase):
+    def test01(self):
         self.post_event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, button = 2, pos = (10, 10))
         pygame.event.post(self.post_event)
         self.event = pygame.event.poll()
@@ -16,7 +17,7 @@ class TestInputKey(unittest.TestCase):
         self.assertEqual('True' == result)
    
   
-    def InputKeySpace(self):
+    def test02(self):
         self.post_event = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_SPACE})
         pygame.event.post(self.post_event)
         self.event = pygame.event.poll()
@@ -24,7 +25,7 @@ class TestInputKey(unittest.TestCase):
             result = True
         self.assertEqual('True' == result)
         
-    def InputKeyEnter(self):
+    def test03(self):
         self.post_event = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_RETURN})
         pygame.event.post(self.post_event)
         self.event = pygame.event.poll()
@@ -32,7 +33,7 @@ class TestInputKey(unittest.TestCase):
             result = True
         self.assertEqual('True' == result)
 
-    def InputKeyEscape(self):
+    def test04(self):
         self.post_event = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_ESCAPE})
         pygame.event.post(self.post_event)
         self.event = pygame.event.poll()
@@ -41,3 +42,6 @@ class TestInputKey(unittest.TestCase):
         self.assertEqual('True' == result)
   
 pygame.quit()
+
+if __name__ == "__main__":
+    unittest.main()
