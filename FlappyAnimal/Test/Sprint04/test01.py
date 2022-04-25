@@ -1,10 +1,10 @@
 import pygame
+import sys
 import unittest
 
 pygame.init()    
 pygame.event.get()
 
-# Keyboard key test for music Input key and Key - p for paused & unpuased
 
 class TestInputKey(unittest.TestCase):
   def MouseClick(self):
@@ -49,5 +49,8 @@ class TestInputKey(unittest.TestCase):
     self.event = pygame.event.poll()
     self.assertEqual(pygame.event.type == pygame.KEYDOWN)
     self.assertEqual(pygame.event.key  == pygame.K_p)
-  
+
 pygame.quit()
+
+if __name__ == "__main__":
+    unittest.main()
