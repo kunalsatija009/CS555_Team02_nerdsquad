@@ -1,12 +1,11 @@
 import pygame
 import unittest
 
-from gameSettings import IS_ACTIVE
 
 pygame.init()    
 pygame.event.get()
 
-
+# Space, Enter, Escape key test
 class TestInputKey(unittest.TestCase):
     def MouseClick(self):
         self.post_event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, button = 2, pos = (10, 10))
