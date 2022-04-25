@@ -6,8 +6,8 @@ pygame.init()
 pygame.event.get()
 
 
-class TestInputKey(unittest.TestCase):
-  def MouseClick(self):
+class Test(unittest.TestCase):
+  def test01(self):
     self.post_event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, button = 1, pos = (10, 10))
     pygame.event.post(self.post_event)
     self.event = pygame.event.poll()
@@ -15,35 +15,35 @@ class TestInputKey(unittest.TestCase):
     self.assertEqual(pygame.event.button  == 1)
     self.assertEqual(pygame.event.pos  == (10, 10))
   
-  def MusicKey_1(self):
+  def test02(self):
     self.post_event = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_1})
     pygame.event.post(self.post_event)
     self.event = pygame.event.poll()
     self.assertEqual(pygame.event.type == pygame.KEYDOWN)
     self.assertEqual(pygame.event.key  == pygame.K_1)
 
-  def MusicKey_2(self):
+  def test03(self):
     self.post_event = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_2})
     pygame.event.post(self.post_event)
     self.event = pygame.event.poll()
     self.assertEqual(pygame.event.type == pygame.KEYDOWN)
     self.assertEqual(pygame.event.key  == pygame.K_2)
 
-  def MusicKey_3(self):
+  def test04(self):
     self.post_event = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_3})
     pygame.event.post(self.post_event)
     self.event = pygame.event.poll()
     self.assertEqual(pygame.event.type == pygame.KEYDOWN)
     self.assertEqual(pygame.event.key  == pygame.K_3)
   
-  def MusicKey_4(self):
+  def test05(self):
     self.post_event = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_4})
     pygame.event.post(self.post_event)
     self.event = pygame.event.poll()
     self.assertEqual(pygame.event.type == pygame.KEYDOWN)
     self.assertEqual(pygame.event.key  == pygame.K_4)
   
-  def MusicKey_p(self):
+  def test06(self):
     self.post_event = pygame.event.Event(pygame.KEYDOWN, {"key": pygame.K_p})
     pygame.event.post(self.post_event)
     self.event = pygame.event.poll()
