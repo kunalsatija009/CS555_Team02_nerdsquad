@@ -13,10 +13,10 @@ Flappy animal is a simple game and the concept is extract from famous game “Fl
 
 
 ### Memebers:
-1. Aditya Badiger
-2. Aishwarya Bartakke
-3. Darshil Kathiriya
-4. Dixa Patel
+1. Dixa Patel
+2. Aditya Badiger
+3. Aishwarya Bartakke
+4. Darshil Kathiriya
 5. Malhar Paghdal
 6. Praveen Jakhar
 
