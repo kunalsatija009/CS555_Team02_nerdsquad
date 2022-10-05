@@ -62,7 +62,7 @@ Star = pygame.transform.scale(Star, (60, 60))
 StarList = []
 StarVerticlePositions = [200,250,300,350,400]
 StarHorizontalPositions = [400,450,500,550,600]
-# Events
+# Event
 XUserEvent = pygame.USEREVENT + 1
 pygame.time.set_timer(XUserEvent,225)
 PipeEvent = pygame.USEREVENT
@@ -70,7 +70,7 @@ pygame.time.set_timer(PipeEvent,2500)
 SCOREEVENT = pygame.USEREVENT + 2
 pygame.time.set_timer(SCOREEVENT,100)
 
-# audio
+# audios
 WingSound = pygame.mixer.Sound('assets/audio/wing.wav')
 HitSound= pygame.mixer.Sound('assets/audio/hit.wav')
 PointSound = pygame.mixer.Sound('assets/audio/point.wav')
@@ -96,7 +96,7 @@ def Back_Ground(lnk):
     bg = pygame.transform.scale(bg, (SCREENWIDTH, SCREENHEIGHT)) 
     return bg 
 
-# wait function 
+# wait functions
 def KeyWait():
     waiting = True
     run = False
@@ -145,7 +145,7 @@ def Button(x_pos, y_pos, width, height, color, hover):
         else:
              pygame.draw.rect(screen, color, (x_pos, y_pos, width, height))
 
-# Text Function
+# Text Functions
 def DText(txt, x, y, clr):
     dTxt = SmallFont.render(str(txt), True, clr)
     TxtRct = dTxt.get_rect(midtop = (x , y))
