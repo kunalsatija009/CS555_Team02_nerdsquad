@@ -7,35 +7,35 @@ from datetime import date
 from gameSettings import *
 import shelve # shelve is One of the standardLibrary to communicate with directory file.
 
-# Initialization of pygame
+# Initialization of Pygame
 pygame.init()
 
 # Initialization of mixer for music
 mixer.init()
 
-# Setting of clock for game
+# Setting of clock for games
 clock = pygame.time.Clock()
 
-# Create the screen
+# Create the screens
 screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT))
 pygame.display.set_caption(TITLE)
 
-# Intialize of Fonts variable
+# Intialize of Fonts variables
 BigFont = pygame.font.SysFont("dejavusans", 55)
 MedFont = pygame.font.SysFont("dejavusans", 40)
 SmallFont = pygame.font.SysFont("dejavusans", 25)
 
-# BackGround image   
+# BackGround images   
 BackGround = pygame.image.load("assets/sprites/BackGround.png").convert()
 BackGround = pygame.transform.scale(BackGround, (SCREENWIDTH, SCREENHEIGHT))
 
-# Players Image
+# Players Images
 BIRDIMAGE = pygame.image.load('assets/sprites/Bird.png')
 PLANEIMAGE = pygame.image.load('assets/sprites/Plane01.png')
 FISHIMAGE = pygame.image.load('assets/sprites/Fish01.png')
 ASTRNTIMAGE = pygame.image.load('assets/sprites/astronaut01.png')
 
-# Theme Image
+# Theme Images
 SKYBG = pygame.image.load('assets/sprites/SkyBG.png')
 SPACEBG = pygame.image.load('assets/sprites/space1.jpg')
 WTRBG = pygame.image.load('assets/sprites/WtrBg1.png')
@@ -50,7 +50,7 @@ Ground = pygame.image.load('assets/sprites/base.png').convert_alpha()
 Ground = pygame.transform.scale(Ground, (int(SCREENWIDTH), int(168)))
 GroundX_Pos = 0
 
-# Obstecle VAriables and settings
+# Obstecle Variables and settings
 GreenPipe = pygame.image.load('assets/sprites/GreenPipe.png')
 GreenPipe = pygame.transform.scale2x(GreenPipe)
 GreenPipeList = []
