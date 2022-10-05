@@ -13,29 +13,29 @@ pygame.init()
 # Initialization of mixer for music
 mixer.init()
 
-# Setting of clock for game
+# Setting of clock for games
 clock = pygame.time.Clock()
 
-# Create the screen
+# Create the screens
 screen = pygame.display.set_mode((SCREENWIDTH, SCREENHEIGHT))
 pygame.display.set_caption(TITLE)
 
-# Intialize of Fonts variable
+# Intialize of Fonts variables
 BigFont = pygame.font.SysFont("dejavusans", 55)
 MedFont = pygame.font.SysFont("dejavusans", 40)
 SmallFont = pygame.font.SysFont("dejavusans", 25)
 
-# BackGround image   
+# BackGround images 
 BackGround = pygame.image.load("assets/sprites/BackGround.png").convert()
 BackGround = pygame.transform.scale(BackGround, (SCREENWIDTH, SCREENHEIGHT))
 
-# Players Image
+# Players Images
 BIRDIMAGE = pygame.image.load('assets/sprites/Bird.png')
 PLANEIMAGE = pygame.image.load('assets/sprites/Plane01.png')
 FISHIMAGE = pygame.image.load('assets/sprites/Fish01.png')
 ASTRNTIMAGE = pygame.image.load('assets/sprites/astronaut01.png')
 
-# Theme Image
+# Theme Images
 SKYBG = pygame.image.load('assets/sprites/SkyBG.png')
 SPACEBG = pygame.image.load('assets/sprites/space1.jpg')
 WTRBG = pygame.image.load('assets/sprites/WtrBg1.png')
@@ -44,7 +44,7 @@ DARKBG = pygame.image.load('assets/sprites/DrkBg.png')
 # To save and load User data
 UserData = shelve.open("UserData")
 
-#  Variables used in game
+#  Variables used in games
 Is_Score = True
 Ground = pygame.image.load('assets/sprites/base.png').convert_alpha()
 Ground = pygame.transform.scale(Ground, (int(SCREENWIDTH), int(168)))
@@ -223,7 +223,7 @@ def ScoreBoard(IsGame, score):
          if int(score) > HSCORE:
             UserData['HIGHSCORE'] = score
 
-# Welcome page on the screen 
+# Welcome page on the screens 
 def WelcomePage():
     TitleText = SmallFont.render("Flappy Animal", True, NAVYBLUE)
     today = date.today()
