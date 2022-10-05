@@ -19,6 +19,7 @@ Flappy animal is a simple game and the concept is extract from famous game “Fl
 4. Darshil Kathiriya
 5. Malhar Paghdal
 6. Praveen Jakhar
+7. Kunal Satija
 
 ### Requirements:
 1. IDE Platfrom we used Visual studio code.
