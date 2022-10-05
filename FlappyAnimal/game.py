@@ -7,10 +7,10 @@ from datetime import date
 from gameSettings import *
 import shelve # shelve is One of the standardLibrary to communicate with directory file.
 
-# Initialization of pygame
+# Initialization of Pygame
 pygame.init()
 
-# Initialization of mixer for music
+# Initialization of mixer for music/sounds
 mixer.init()
 
 # Setting of clock for game
