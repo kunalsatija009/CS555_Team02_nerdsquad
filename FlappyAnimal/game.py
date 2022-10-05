@@ -10,7 +10,7 @@ import shelve # shelve is One of the standardLibrary to communicate with directo
 # Initialization of Pygame
 pygame.init()
 
-# Initialization of mixer for music
+# Initialization of mixer for music/sounds
 mixer.init()
 
 # Setting of clock for games
