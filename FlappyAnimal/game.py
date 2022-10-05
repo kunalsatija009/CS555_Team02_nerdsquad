@@ -145,7 +145,7 @@ def Button(x_pos, y_pos, width, height, color, hover):
         else:
              pygame.draw.rect(screen, color, (x_pos, y_pos, width, height))
 
-# Text Functions
+# Text Function
 def DText(txt, x, y, clr):
     dTxt = SmallFont.render(str(txt), True, clr)
     TxtRct = dTxt.get_rect(midtop = (x , y))
